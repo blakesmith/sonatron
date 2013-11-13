@@ -1,7 +1,12 @@
 package me.blakesmith.sonatron.service
 
-import javax.jws.{WebMethod, WebService}
+import javax.jws.{WebParam, WebMethod, WebResult, WebService}
+import javax.xml.ws.{RequestWrapper, ResponseWrapper}
+import javax.jws.soap.SOAPBinding
+import javax.jws.soap.SOAPBinding.Style
 
+import com.sonos.smapi.soap.DeviceLinkCodeResult
+import com.sonos.smapi.soap.{GetDeviceLinkCode, GetDeviceLinkCodeResponse}
 import com.sonos.smapi.soap.{GetExtendedMetadata, GetExtendedMetadataResponse}
 import com.sonos.smapi.soap.{GetExtendedMetadataText, GetExtendedMetadataTextResponse}
 import com.sonos.smapi.soap.{GetMediaMetadata, GetMediaMetadataResponse}
@@ -13,33 +18,19 @@ import com.sonos.smapi.soap.{Search, SearchResponse}
 
 
 trait SonatronService {
-  @WebMethod
   def getSessionId(sid: GetSessionId): GetSessionIdResponse
-  
-  @WebMethod
   def getMetadata(meta: GetMetadata): GetMetadataResponse
-
-  @WebMethod
   def search(search: Search): SearchResponse
-
-  @WebMethod
   def getMediaMetadata(params: GetMediaMetadata): GetMediaMetadataResponse
-
-  @WebMethod
   def getMediaURI(params: GetMediaURI): GetMediaURIResponse
-
-  @WebMethod
   def getLastUpdate: LastUpdate
-
-  @WebMethod
   def getExtendedMetadata(params: GetExtendedMetadata): GetExtendedMetadataResponse
-
-  @WebMethod
   def getExtendedMetadataText(params: GetExtendedMetadataText): GetExtendedMetadataTextResponse
+  def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse
 }
 
 
-@WebService
+@WebService(targetNamespace = "http://www.sonos.com/Services/1.1", name = "SonosSoap")
 class SonatronServiceServer extends SonatronService {
   override def getSessionId(sid: GetSessionId): GetSessionIdResponse = {
     val resp = new GetSessionIdResponse
@@ -79,6 +70,23 @@ class SonatronServiceServer extends SonatronService {
 
   override def getExtendedMetadataText(params: GetExtendedMetadataText): GetExtendedMetadataTextResponse = {
     val resp = new GetExtendedMetadataTextResponse
+    resp
+  }
+
+  @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+  @WebResult(targetNamespace = "http://www.sonos.com/Services/1.1")
+  @RequestWrapper(localName = "getDeviceLinkCode", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceLinkCode")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getDeviceLinkCode")
+  @ResponseWrapper(localName = "getDeviceLinkCodeResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceLinkCodeResponse")
+  override def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse = {
+    val resp = new GetDeviceLinkCodeResponse
+    val link = new DeviceLinkCodeResult
+    link.setRegUrl("http://blakesmith.me")
+    link.setLinkCode("NA")
+    link.setShowLinkCode(false)
+
+    resp.setGetDeviceLinkCodeResult(link)
+    println(resp)
     resp
   }
 }

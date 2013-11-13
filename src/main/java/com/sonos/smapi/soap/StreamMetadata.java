@@ -24,6 +24,10 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="secondsToNextShow" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="bitrate" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="logo" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
+ *         &lt;element name="reliability" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
+ *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
+ *         &lt;element name="subtitle" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
+ *         &lt;element name="nextShowSeconds" type="{http://www.w3.org/2001/XMLSchema}anyURI" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,7 +44,11 @@ import javax.xml.bind.annotation.XmlType;
     "secondsRemaining",
     "secondsToNextShow",
     "bitrate",
-    "logo"
+    "logo",
+    "reliability",
+    "title",
+    "subtitle",
+    "nextShowSeconds"
 })
 public class StreamMetadata {
 
@@ -52,6 +60,14 @@ public class StreamMetadata {
     protected Integer bitrate;
     @XmlSchemaType(name = "anyURI")
     protected String logo;
+    @XmlSchemaType(name = "anyURI")
+    protected String reliability;
+    @XmlSchemaType(name = "anyURI")
+    protected String title;
+    @XmlSchemaType(name = "anyURI")
+    protected String subtitle;
+    @XmlSchemaType(name = "anyURI")
+    protected String nextShowSeconds;
 
     /**
      * Gets the value of the currentHost property.
@@ -219,6 +235,102 @@ public class StreamMetadata {
      */
     public void setLogo(String value) {
         this.logo = value;
+    }
+
+    /**
+     * Gets the value of the reliability property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getReliability() {
+        return reliability;
+    }
+
+    /**
+     * Sets the value of the reliability property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setReliability(String value) {
+        this.reliability = value;
+    }
+
+    /**
+     * Gets the value of the title property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Sets the value of the title property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setTitle(String value) {
+        this.title = value;
+    }
+
+    /**
+     * Gets the value of the subtitle property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    /**
+     * Sets the value of the subtitle property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setSubtitle(String value) {
+        this.subtitle = value;
+    }
+
+    /**
+     * Gets the value of the nextShowSeconds property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getNextShowSeconds() {
+        return nextShowSeconds;
+    }
+
+    /**
+     * Sets the value of the nextShowSeconds property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setNextShowSeconds(String value) {
+        this.nextShowSeconds = value;
     }
 
 }

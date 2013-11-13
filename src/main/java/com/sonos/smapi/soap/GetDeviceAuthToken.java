@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -19,8 +18,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="getMediaURIResult" type="{http://www.w3.org/2001/XMLSchema}anyURI"/>
- *         &lt;element name="httpHeaders" type="{http://www.sonos.com/Services/1.1}httpHeaders" minOccurs="0"/>
+ *         &lt;element name="householdId" type="{http://www.sonos.com/Services/1.1}id"/>
+ *         &lt;element name="linkCode" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,63 +30,63 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "getMediaURIResult",
-    "httpHeaders"
+    "householdId",
+    "linkCode"
 })
-@XmlRootElement(name = "getMediaURIResponse")
-public class GetMediaURIResponse {
+@XmlRootElement(name = "getDeviceAuthToken")
+public class GetDeviceAuthToken {
 
     @XmlElement(required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String getMediaURIResult;
-    protected HttpHeaders httpHeaders;
+    protected String householdId;
+    @XmlElement(required = true)
+    protected String linkCode;
 
     /**
-     * Gets the value of the getMediaURIResult property.
+     * Gets the value of the householdId property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getGetMediaURIResult() {
-        return getMediaURIResult;
+    public String getHouseholdId() {
+        return householdId;
     }
 
     /**
-     * Sets the value of the getMediaURIResult property.
+     * Sets the value of the householdId property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setGetMediaURIResult(String value) {
-        this.getMediaURIResult = value;
+    public void setHouseholdId(String value) {
+        this.householdId = value;
     }
 
     /**
-     * Gets the value of the httpHeaders property.
+     * Gets the value of the linkCode property.
      * 
      * @return
      *     possible object is
-     *     {@link HttpHeaders }
+     *     {@link String }
      *     
      */
-    public HttpHeaders getHttpHeaders() {
-        return httpHeaders;
+    public String getLinkCode() {
+        return linkCode;
     }
 
     /**
-     * Sets the value of the httpHeaders property.
+     * Sets the value of the linkCode property.
      * 
      * @param value
      *     allowed object is
-     *     {@link HttpHeaders }
+     *     {@link String }
      *     
      */
-    public void setHttpHeaders(HttpHeaders value) {
-        this.httpHeaders = value;
+    public void setLinkCode(String value) {
+        this.linkCode = value;
     }
 
 }

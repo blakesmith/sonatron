@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;choice>
  *           &lt;element ref="{http://www.sonos.com/Services/1.1}sessionId"/>
  *           &lt;element ref="{http://www.sonos.com/Services/1.1}login"/>
+ *           &lt;element ref="{http://www.sonos.com/Services/1.1}loginToken"/>
  *         &lt;/choice>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -36,7 +37,8 @@ import javax.xml.bind.annotation.XmlType;
     "deviceId",
     "deviceProvider",
     "sessionId",
-    "login"
+    "login",
+    "loginToken"
 })
 @XmlRootElement(name = "credentials")
 public class Credentials {
@@ -45,6 +47,7 @@ public class Credentials {
     protected String deviceProvider;
     protected String sessionId;
     protected Login login;
+    protected LoginToken loginToken;
 
     /**
      * Gets the value of the deviceId property.
@@ -140,6 +143,30 @@ public class Credentials {
      */
     public void setLogin(Login value) {
         this.login = value;
+    }
+
+    /**
+     * Gets the value of the loginToken property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link LoginToken }
+     *     
+     */
+    public LoginToken getLoginToken() {
+        return loginToken;
+    }
+
+    /**
+     * Sets the value of the loginToken property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link LoginToken }
+     *     
+     */
+    public void setLoginToken(LoginToken value) {
+        this.loginToken = value;
     }
 
 }

@@ -28,6 +28,7 @@ public class ObjectFactory {
     private final static QName _Label_QNAME = new QName("http://www.sonos.com/Services/1.1", "label");
     private final static QName _ItemType_QNAME = new QName("http://www.sonos.com/Services/1.1", "itemType");
     private final static QName _SessionId_QNAME = new QName("http://www.sonos.com/Services/1.1", "sessionId");
+    private final static QName _Title_QNAME = new QName("http://www.sonos.com/Services/1.1", "title");
     private final static QName _Username_QNAME = new QName("http://www.sonos.com/Services/1.1", "username");
     private final static QName _Id_QNAME = new QName("http://www.sonos.com/Services/1.1", "id");
 
@@ -39,27 +40,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetMediaMetadataResponse }
+     * Create an instance of {@link AddToContainer }
      * 
      */
-    public GetMediaMetadataResponse createGetMediaMetadataResponse() {
-        return new GetMediaMetadataResponse();
-    }
-
-    /**
-     * Create an instance of {@link ItemRating }
-     * 
-     */
-    public ItemRating createItemRating() {
-        return new ItemRating();
-    }
-
-    /**
-     * Create an instance of {@link GetSessionId }
-     * 
-     */
-    public GetSessionId createGetSessionId() {
-        return new GetSessionId();
+    public AddToContainer createAddToContainer() {
+        return new AddToContainer();
     }
 
     /**
@@ -71,27 +56,27 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetSessionId }
+     * 
+     */
+    public GetSessionId createGetSessionId() {
+        return new GetSessionId();
+    }
+
+    /**
+     * Create an instance of {@link RemoveFromContainer }
+     * 
+     */
+    public RemoveFromContainer createRemoveFromContainer() {
+        return new RemoveFromContainer();
+    }
+
+    /**
      * Create an instance of {@link DeleteItem }
      * 
      */
     public DeleteItem createDeleteItem() {
         return new DeleteItem();
-    }
-
-    /**
-     * Create an instance of {@link RelatedBrowse }
-     * 
-     */
-    public RelatedBrowse createRelatedBrowse() {
-        return new RelatedBrowse();
-    }
-
-    /**
-     * Create an instance of {@link ExtendedMetadata }
-     * 
-     */
-    public ExtendedMetadata createExtendedMetadata() {
-        return new ExtendedMetadata();
     }
 
     /**
@@ -103,187 +88,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link DynamicData }
+     * Create an instance of {@link Login }
      * 
      */
-    public DynamicData createDynamicData() {
-        return new DynamicData();
-    }
-
-    /**
-     * Create an instance of {@link SearchResponse }
-     * 
-     */
-    public SearchResponse createSearchResponse() {
-        return new SearchResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetMetadata }
-     * 
-     */
-    public GetMetadata createGetMetadata() {
-        return new GetMetadata();
-    }
-
-    /**
-     * Create an instance of {@link MediaCollection }
-     * 
-     */
-    public MediaCollection createMediaCollection() {
-        return new MediaCollection();
-    }
-
-    /**
-     * Create an instance of {@link GetExtendedMetadataResponse }
-     * 
-     */
-    public GetExtendedMetadataResponse createGetExtendedMetadataResponse() {
-        return new GetExtendedMetadataResponse();
-    }
-
-    /**
-     * Create an instance of {@link SetPlayedSecondsResponse }
-     * 
-     */
-    public SetPlayedSecondsResponse createSetPlayedSecondsResponse() {
-        return new SetPlayedSecondsResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetSessionIdResponse }
-     * 
-     */
-    public GetSessionIdResponse createGetSessionIdResponse() {
-        return new GetSessionIdResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetExtendedMetadataTextResponse }
-     * 
-     */
-    public GetExtendedMetadataTextResponse createGetExtendedMetadataTextResponse() {
-        return new GetExtendedMetadataTextResponse();
-    }
-
-    /**
-     * Create an instance of {@link MediaMetadata }
-     * 
-     */
-    public MediaMetadata createMediaMetadata() {
-        return new MediaMetadata();
-    }
-
-    /**
-     * Create an instance of {@link Property }
-     * 
-     */
-    public Property createProperty() {
-        return new Property();
-    }
-
-    /**
-     * Create an instance of {@link StreamMetadata }
-     * 
-     */
-    public StreamMetadata createStreamMetadata() {
-        return new StreamMetadata();
-    }
-
-    /**
-     * Create an instance of {@link GetScrollIndicesResponse }
-     * 
-     */
-    public GetScrollIndicesResponse createGetScrollIndicesResponse() {
-        return new GetScrollIndicesResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetMediaURIResponse }
-     * 
-     */
-    public GetMediaURIResponse createGetMediaURIResponse() {
-        return new GetMediaURIResponse();
-    }
-
-    /**
-     * Create an instance of {@link ReportStatusResponse }
-     * 
-     */
-    public ReportStatusResponse createReportStatusResponse() {
-        return new ReportStatusResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetExtendedMetadataText }
-     * 
-     */
-    public GetExtendedMetadataText createGetExtendedMetadataText() {
-        return new GetExtendedMetadataText();
-    }
-
-    /**
-     * Create an instance of {@link CreateItemResponse }
-     * 
-     */
-    public CreateItemResponse createCreateItemResponse() {
-        return new CreateItemResponse();
-    }
-
-    /**
-     * Create an instance of {@link LastUpdate }
-     * 
-     */
-    public LastUpdate createLastUpdate() {
-        return new LastUpdate();
-    }
-
-    /**
-     * Create an instance of {@link GetLastUpdateResponse }
-     * 
-     */
-    public GetLastUpdateResponse createGetLastUpdateResponse() {
-        return new GetLastUpdateResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetExtendedMetadata }
-     * 
-     */
-    public GetExtendedMetadata createGetExtendedMetadata() {
-        return new GetExtendedMetadata();
-    }
-
-    /**
-     * Create an instance of {@link GetMediaMetadata }
-     * 
-     */
-    public GetMediaMetadata createGetMediaMetadata() {
-        return new GetMediaMetadata();
-    }
-
-    /**
-     * Create an instance of {@link CreateItem }
-     * 
-     */
-    public CreateItem createCreateItem() {
-        return new CreateItem();
-    }
-
-    /**
-     * Create an instance of {@link ReportStatus }
-     * 
-     */
-    public ReportStatus createReportStatus() {
-        return new ReportStatus();
-    }
-
-    /**
-     * Create an instance of {@link RelatedText }
-     * 
-     */
-    public RelatedText createRelatedText() {
-        return new RelatedText();
+    public Login createLogin() {
+        return new Login();
     }
 
     /**
@@ -295,67 +104,51 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link RateItem }
+     * Create an instance of {@link LoginToken }
      * 
      */
-    public RateItem createRateItem() {
-        return new RateItem();
+    public LoginToken createLoginToken() {
+        return new LoginToken();
     }
 
     /**
-     * Create an instance of {@link RateItemResponse }
+     * Create an instance of {@link GetExtendedMetadata }
      * 
      */
-    public RateItemResponse createRateItemResponse() {
-        return new RateItemResponse();
+    public GetExtendedMetadata createGetExtendedMetadata() {
+        return new GetExtendedMetadata();
     }
 
     /**
-     * Create an instance of {@link MediaList }
+     * Create an instance of {@link RemoveFromContainerResponse }
      * 
      */
-    public MediaList createMediaList() {
-        return new MediaList();
+    public RemoveFromContainerResponse createRemoveFromContainerResponse() {
+        return new RemoveFromContainerResponse();
     }
 
     /**
-     * Create an instance of {@link Login }
+     * Create an instance of {@link RemoveFromContainerResult }
      * 
      */
-    public Login createLogin() {
-        return new Login();
+    public RemoveFromContainerResult createRemoveFromContainerResult() {
+        return new RemoveFromContainerResult();
     }
 
     /**
-     * Create an instance of {@link DeleteItemResponse }
+     * Create an instance of {@link GetScrollIndicesResponse }
      * 
      */
-    public DeleteItemResponse createDeleteItemResponse() {
-        return new DeleteItemResponse();
+    public GetScrollIndicesResponse createGetScrollIndicesResponse() {
+        return new GetScrollIndicesResponse();
     }
 
     /**
-     * Create an instance of {@link TrackMetadata }
+     * Create an instance of {@link GetMediaMetadata }
      * 
      */
-    public TrackMetadata createTrackMetadata() {
-        return new TrackMetadata();
-    }
-
-    /**
-     * Create an instance of {@link GetMetadataResponse }
-     * 
-     */
-    public GetMetadataResponse createGetMetadataResponse() {
-        return new GetMetadataResponse();
-    }
-
-    /**
-     * Create an instance of {@link GetLastUpdate }
-     * 
-     */
-    public GetLastUpdate createGetLastUpdate() {
-        return new GetLastUpdate();
+    public GetMediaMetadata createGetMediaMetadata() {
+        return new GetMediaMetadata();
     }
 
     /**
@@ -367,11 +160,435 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DeleteContainerResponse }
+     * 
+     */
+    public DeleteContainerResponse createDeleteContainerResponse() {
+        return new DeleteContainerResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeleteContainerResult }
+     * 
+     */
+    public DeleteContainerResult createDeleteContainerResult() {
+        return new DeleteContainerResult();
+    }
+
+    /**
+     * Create an instance of {@link ReportStatus }
+     * 
+     */
+    public ReportStatus createReportStatus() {
+        return new ReportStatus();
+    }
+
+    /**
+     * Create an instance of {@link GetMetadataResponse }
+     * 
+     */
+    public GetMetadataResponse createGetMetadataResponse() {
+        return new GetMetadataResponse();
+    }
+
+    /**
+     * Create an instance of {@link MediaList }
+     * 
+     */
+    public MediaList createMediaList() {
+        return new MediaList();
+    }
+
+    /**
+     * Create an instance of {@link RenameContainer }
+     * 
+     */
+    public RenameContainer createRenameContainer() {
+        return new RenameContainer();
+    }
+
+    /**
+     * Create an instance of {@link RateItem }
+     * 
+     */
+    public RateItem createRateItem() {
+        return new RateItem();
+    }
+
+    /**
+     * Create an instance of {@link CreateItemResponse }
+     * 
+     */
+    public CreateItemResponse createCreateItemResponse() {
+        return new CreateItemResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetSessionIdResponse }
+     * 
+     */
+    public GetSessionIdResponse createGetSessionIdResponse() {
+        return new GetSessionIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link ReportStatusResponse }
+     * 
+     */
+    public ReportStatusResponse createReportStatusResponse() {
+        return new ReportStatusResponse();
+    }
+
+    /**
+     * Create an instance of {@link CreateContainerResponse }
+     * 
+     */
+    public CreateContainerResponse createCreateContainerResponse() {
+        return new CreateContainerResponse();
+    }
+
+    /**
+     * Create an instance of {@link CreateContainerResult }
+     * 
+     */
+    public CreateContainerResult createCreateContainerResult() {
+        return new CreateContainerResult();
+    }
+
+    /**
+     * Create an instance of {@link AddToContainerResponse }
+     * 
+     */
+    public AddToContainerResponse createAddToContainerResponse() {
+        return new AddToContainerResponse();
+    }
+
+    /**
+     * Create an instance of {@link AddToContainerResult }
+     * 
+     */
+    public AddToContainerResult createAddToContainerResult() {
+        return new AddToContainerResult();
+    }
+
+    /**
+     * Create an instance of {@link CreateContainer }
+     * 
+     */
+    public CreateContainer createCreateContainer() {
+        return new CreateContainer();
+    }
+
+    /**
+     * Create an instance of {@link GetLastUpdateResponse }
+     * 
+     */
+    public GetLastUpdateResponse createGetLastUpdateResponse() {
+        return new GetLastUpdateResponse();
+    }
+
+    /**
+     * Create an instance of {@link LastUpdate }
+     * 
+     */
+    public LastUpdate createLastUpdate() {
+        return new LastUpdate();
+    }
+
+    /**
+     * Create an instance of {@link GetMediaMetadataResponse }
+     * 
+     */
+    public GetMediaMetadataResponse createGetMediaMetadataResponse() {
+        return new GetMediaMetadataResponse();
+    }
+
+    /**
+     * Create an instance of {@link MediaMetadata }
+     * 
+     */
+    public MediaMetadata createMediaMetadata() {
+        return new MediaMetadata();
+    }
+
+    /**
+     * Create an instance of {@link GetExtendedMetadataResponse }
+     * 
+     */
+    public GetExtendedMetadataResponse createGetExtendedMetadataResponse() {
+        return new GetExtendedMetadataResponse();
+    }
+
+    /**
+     * Create an instance of {@link ExtendedMetadata }
+     * 
+     */
+    public ExtendedMetadata createExtendedMetadata() {
+        return new ExtendedMetadata();
+    }
+
+    /**
+     * Create an instance of {@link DeleteContainer }
+     * 
+     */
+    public DeleteContainer createDeleteContainer() {
+        return new DeleteContainer();
+    }
+
+    /**
+     * Create an instance of {@link ReorderContainerResponse }
+     * 
+     */
+    public ReorderContainerResponse createReorderContainerResponse() {
+        return new ReorderContainerResponse();
+    }
+
+    /**
+     * Create an instance of {@link ReorderContainerResult }
+     * 
+     */
+    public ReorderContainerResult createReorderContainerResult() {
+        return new ReorderContainerResult();
+    }
+
+    /**
+     * Create an instance of {@link GetExtendedMetadataTextResponse }
+     * 
+     */
+    public GetExtendedMetadataTextResponse createGetExtendedMetadataTextResponse() {
+        return new GetExtendedMetadataTextResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetExtendedMetadataText }
+     * 
+     */
+    public GetExtendedMetadataText createGetExtendedMetadataText() {
+        return new GetExtendedMetadataText();
+    }
+
+    /**
+     * Create an instance of {@link GetMediaURIResponse }
+     * 
+     */
+    public GetMediaURIResponse createGetMediaURIResponse() {
+        return new GetMediaURIResponse();
+    }
+
+    /**
+     * Create an instance of {@link HttpHeaders }
+     * 
+     */
+    public HttpHeaders createHttpHeaders() {
+        return new HttpHeaders();
+    }
+
+    /**
+     * Create an instance of {@link RenameContainerResponse }
+     * 
+     */
+    public RenameContainerResponse createRenameContainerResponse() {
+        return new RenameContainerResponse();
+    }
+
+    /**
+     * Create an instance of {@link RenameContainerResult }
+     * 
+     */
+    public RenameContainerResult createRenameContainerResult() {
+        return new RenameContainerResult();
+    }
+
+    /**
+     * Create an instance of {@link GetLastUpdate }
+     * 
+     */
+    public GetLastUpdate createGetLastUpdate() {
+        return new GetLastUpdate();
+    }
+
+    /**
+     * Create an instance of {@link SetPlayedSecondsResponse }
+     * 
+     */
+    public SetPlayedSecondsResponse createSetPlayedSecondsResponse() {
+        return new SetPlayedSecondsResponse();
+    }
+
+    /**
+     * Create an instance of {@link SearchResponse }
+     * 
+     */
+    public SearchResponse createSearchResponse() {
+        return new SearchResponse();
+    }
+
+    /**
+     * Create an instance of {@link RateItemResponse }
+     * 
+     */
+    public RateItemResponse createRateItemResponse() {
+        return new RateItemResponse();
+    }
+
+    /**
+     * Create an instance of {@link ItemRating }
+     * 
+     */
+    public ItemRating createItemRating() {
+        return new ItemRating();
+    }
+
+    /**
+     * Create an instance of {@link DeleteItemResponse }
+     * 
+     */
+    public DeleteItemResponse createDeleteItemResponse() {
+        return new DeleteItemResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetDeviceAuthToken }
+     * 
+     */
+    public GetDeviceAuthToken createGetDeviceAuthToken() {
+        return new GetDeviceAuthToken();
+    }
+
+    /**
+     * Create an instance of {@link GetDeviceLinkCodeResponse }
+     * 
+     */
+    public GetDeviceLinkCodeResponse createGetDeviceLinkCodeResponse() {
+        return new GetDeviceLinkCodeResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeviceLinkCodeResult }
+     * 
+     */
+    public DeviceLinkCodeResult createDeviceLinkCodeResult() {
+        return new DeviceLinkCodeResult();
+    }
+
+    /**
+     * Create an instance of {@link GetDeviceLinkCode }
+     * 
+     */
+    public GetDeviceLinkCode createGetDeviceLinkCode() {
+        return new GetDeviceLinkCode();
+    }
+
+    /**
+     * Create an instance of {@link ReorderContainer }
+     * 
+     */
+    public ReorderContainer createReorderContainer() {
+        return new ReorderContainer();
+    }
+
+    /**
+     * Create an instance of {@link GetDeviceAuthTokenResponse }
+     * 
+     */
+    public GetDeviceAuthTokenResponse createGetDeviceAuthTokenResponse() {
+        return new GetDeviceAuthTokenResponse();
+    }
+
+    /**
+     * Create an instance of {@link DeviceAuthTokenResult }
+     * 
+     */
+    public DeviceAuthTokenResult createDeviceAuthTokenResult() {
+        return new DeviceAuthTokenResult();
+    }
+
+    /**
+     * Create an instance of {@link CreateItem }
+     * 
+     */
+    public CreateItem createCreateItem() {
+        return new CreateItem();
+    }
+
+    /**
      * Create an instance of {@link GetMediaURI }
      * 
      */
     public GetMediaURI createGetMediaURI() {
         return new GetMediaURI();
+    }
+
+    /**
+     * Create an instance of {@link GetMetadata }
+     * 
+     */
+    public GetMetadata createGetMetadata() {
+        return new GetMetadata();
+    }
+
+    /**
+     * Create an instance of {@link TrackMetadata }
+     * 
+     */
+    public TrackMetadata createTrackMetadata() {
+        return new TrackMetadata();
+    }
+
+    /**
+     * Create an instance of {@link RelatedText }
+     * 
+     */
+    public RelatedText createRelatedText() {
+        return new RelatedText();
+    }
+
+    /**
+     * Create an instance of {@link HttpHeader }
+     * 
+     */
+    public HttpHeader createHttpHeader() {
+        return new HttpHeader();
+    }
+
+    /**
+     * Create an instance of {@link MediaCollection }
+     * 
+     */
+    public MediaCollection createMediaCollection() {
+        return new MediaCollection();
+    }
+
+    /**
+     * Create an instance of {@link StreamMetadata }
+     * 
+     */
+    public StreamMetadata createStreamMetadata() {
+        return new StreamMetadata();
+    }
+
+    /**
+     * Create an instance of {@link Property }
+     * 
+     */
+    public Property createProperty() {
+        return new Property();
+    }
+
+    /**
+     * Create an instance of {@link RelatedBrowse }
+     * 
+     */
+    public RelatedBrowse createRelatedBrowse() {
+        return new RelatedBrowse();
+    }
+
+    /**
+     * Create an instance of {@link DynamicData }
+     * 
+     */
+    public DynamicData createDynamicData() {
+        return new DynamicData();
     }
 
     /**
@@ -408,6 +625,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://www.sonos.com/Services/1.1", name = "sessionId")
     public JAXBElement<String> createSessionId(String value) {
         return new JAXBElement<String>(_SessionId_QNAME, String.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://www.sonos.com/Services/1.1", name = "title")
+    public JAXBElement<String> createTitle(String value) {
+        return new JAXBElement<String>(_Title_QNAME, String.class, null, value);
     }
 
     /**
