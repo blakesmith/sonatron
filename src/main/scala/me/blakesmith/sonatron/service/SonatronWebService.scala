@@ -4,12 +4,19 @@ import org.scalatra._
 
 class SonatronWebService extends ScalatraServlet {
 
-  get("/") {
-    <html>
-      <body>
-        <h1>Hello, world!</h1>
-        Say <a href="hello-scalate">hello to Scalate</a>.
-      </body>
-    </html>
+  get("/connect") {
+    params.get("error") match {
+      case Some(_) =>
+        val desc = params.get("error_description").getOrElse("Something went wrong")
+        "You denied the request. Please authorize Sonatron to use your Soundcloud account: %s".format(desc)
+      case None =>
+        params.get("code") match {
+          case Some(code) =>
+            // TODO: Store
+            "It worked! Please open your Sonos controller window"
+          case None =>
+            "Error, didn't receive a code from soundcloud"
+        }
+    }
   }
 }
