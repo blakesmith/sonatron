@@ -86,7 +86,6 @@ class SonatronServiceServer extends SonatronService {
     link.setShowLinkCode(false)
 
     resp.setGetDeviceLinkCodeResult(link)
-    println(resp)
     resp
   }
 }
