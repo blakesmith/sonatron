@@ -5,8 +5,8 @@ import javax.xml.ws.{RequestWrapper, ResponseWrapper}
 import javax.jws.soap.SOAPBinding
 import javax.jws.soap.SOAPBinding.Style
 
-import com.sonos.smapi.soap.DeviceLinkCodeResult
-import com.sonos.smapi.soap.{GetDeviceLinkCode, GetDeviceLinkCodeResponse}
+import com.sonos.smapi.soap.{GetDeviceLinkCodeResponse, DeviceLinkCodeResult}
+import com.sonos.smapi.soap.{GetDeviceAuthTokenResponse, DeviceAuthTokenResult}
 import com.sonos.smapi.soap.{GetExtendedMetadata, GetExtendedMetadataResponse}
 import com.sonos.smapi.soap.{GetExtendedMetadataText, GetExtendedMetadataTextResponse}
 import com.sonos.smapi.soap.{GetMediaMetadata, GetMediaMetadataResponse}
@@ -27,6 +27,8 @@ trait SonatronService {
   def getExtendedMetadata(params: GetExtendedMetadata): GetExtendedMetadataResponse
   def getExtendedMetadataText(params: GetExtendedMetadataText): GetExtendedMetadataTextResponse
   def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse
+  def getDeviceAuthToken(householdId: String,
+    linkCode: String): DeviceAuthTokenResult
 }
 
 
@@ -78,7 +80,7 @@ class SonatronServiceServer extends SonatronService {
   @RequestWrapper(localName = "getDeviceLinkCode", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceLinkCode")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getDeviceLinkCode")
   @ResponseWrapper(localName = "getDeviceLinkCodeResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceLinkCodeResponse")
-  override def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse = {
+  def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse = {
     val resp = new GetDeviceLinkCodeResponse
     val link = new DeviceLinkCodeResult
     link.setRegUrl("http://blakesmith.me")
@@ -87,6 +89,18 @@ class SonatronServiceServer extends SonatronService {
 
     resp.setGetDeviceLinkCodeResult(link)
     resp
+  }
+
+  @WebResult(name = "getDeviceAuthTokenResult", targetNamespace = "http://www.sonos.com/Services/1.1")
+  @RequestWrapper(localName = "getDeviceAuthToken", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceAuthToken")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getDeviceAuthToken")
+  @ResponseWrapper(localName = "getDeviceAuthTokenResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceAuthTokenResponse")
+  def getDeviceAuthToken(@WebParam(name = "householdId", targetNamespace = "http://www.sonos.com/Services/1.1") householdId: String,
+    @WebParam(name = "linkCode", targetNamespace = "http://www.sonos.com/Services/1.1") linkCode: String): DeviceAuthTokenResult = {
+    val authToken = new DeviceAuthTokenResult
+    authToken.setAuthToken("token123")
+    authToken.setPrivateKey("privateKey")
+    authToken
   }
 }
 
