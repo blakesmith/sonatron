@@ -2,10 +2,13 @@ package me.blakesmith.sonatron
 
 import javax.xml.ws.Endpoint
 
-import me.blakesmith.sonatron.service.SonatronServiceServer
+import me.blakesmith.sonatron.service.{FileService, SonatronServiceServer}
 
 object App {
   def main(args: Array[String]): Unit = {
-    Endpoint.publish("http://localhost:8080/", new SonatronServiceServer)
+    val fileService = new FileService
+    fileService.runInBackground
+
+    Endpoint.publish("http://0.0.0.0:8080/", new SonatronServiceServer)
   }
 }

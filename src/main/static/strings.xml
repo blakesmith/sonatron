@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<stringtables xmlns="http://sonos.com/sonosapi">
+    <stringtable rev="4" xml:lang="en-US">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+        <string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="de-DE">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="fr-FR">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="it-IT">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="es-ES">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="sv-SE">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="nl-NL">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="zh-CN">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+    <stringtable rev="4" xml:lang="ja-JP">
+        <string stringId="RATE_UP">Love Track</string>
+        <string stringId="SUCCESS_UP">Track was loved</string>
+        <string stringId="RATE_DOWN">Ban Track</string>
+        <string stringId="SUCCESS_DOWN">Track was banned</string>
+		<string stringId="ServicePromo">The personalized music experience based on your own unique taste now for Sonos</string>
+        <string stringId="STAR_TRACK">Star Track</string>
+        <string stringId="STAR_TRACK_DURING">Starring track...</string>
+        <string stringId="STAR_TRACK_SUCCESS">The track was starred</string>
+        <string stringId="STAR_TRACK_FAILURE">An error occurred while starring the track</string>
+	<string stringId="UNSTAR_TRACK">Unstar Track</string>
+        <string stringId="UNSTAR_TRACK_PROMPT">Do you really want to unstar this track?</string>
+        <string stringId="UNSTAR_TRACK_SUCCESS">The track was unstarred</string>
+        <string stringId="UNSTAR_TRACK_FAILURE">An error occurred while unstarring the track</string>
+    </stringtable>
+</stringtables>
