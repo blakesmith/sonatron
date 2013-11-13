@@ -16,63 +16,53 @@ import com.sonos.smapi.soap.{GetSessionId, GetSessionIdResponse}
 import com.sonos.smapi.soap.LastUpdate
 import com.sonos.smapi.soap.{Search, SearchResponse}
 
-import me.blakesmith.sonatron.exception.Fault
-import me.blakesmith.soundcloud.{Client => SoundCloud}
+import scala.concurrent.Await
+import scala.concurrent.duration._
 
-trait SonatronService {
-  def getSessionId(sid: GetSessionId): GetSessionIdResponse
-  def getMetadata(meta: GetMetadata): GetMetadataResponse
-  def search(search: Search): SearchResponse
-  def getMediaMetadata(params: GetMediaMetadata): GetMediaMetadataResponse
-  def getMediaURI(params: GetMediaURI): GetMediaURIResponse
-  def getLastUpdate: LastUpdate
-  def getExtendedMetadata(params: GetExtendedMetadata): GetExtendedMetadataResponse
-  def getExtendedMetadataText(params: GetExtendedMetadataText): GetExtendedMetadataTextResponse
-  def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse
-  def getDeviceAuthToken(householdId: String,
-    linkCode: String): DeviceAuthTokenResult
-}
+import me.blakesmith.sonatron.exception.Fault
+import me.blakesmith.sonatron.provider.Provider
+import me.blakesmith.soundcloud.SoundCloudProvider
 
 
 @WebService(targetNamespace = "http://www.sonos.com/Services/1.1", name = "SonosSoap")
-class SonatronServiceServer extends SonatronService {
-  override def getSessionId(sid: GetSessionId): GetSessionIdResponse = {
+class SonatronServiceServer(provider: Provider) {
+  def getSessionId(sid: GetSessionId): GetSessionIdResponse = {
     val resp = new GetSessionIdResponse
     resp.setGetSessionIdResult("1234");
     resp
   }
 
-  override def getMetadata(params: GetMetadata): GetMetadataResponse = {
+  def getMetadata(params: GetMetadata): GetMetadataResponse = {
     val resp = new GetMetadataResponse
     resp
   }
 
-  override def search(search: Search): SearchResponse = {
+  def search(search: Search): SearchResponse = {
     val resp = new SearchResponse
     resp
   }
 
-  override def getMediaMetadata(params: GetMediaMetadata): GetMediaMetadataResponse = {
+  def getMediaMetadata(params: GetMediaMetadata): GetMediaMetadataResponse = {
     val resp = new GetMediaMetadataResponse
     resp
   }
 
-  override def getMediaURI(params: GetMediaURI): GetMediaURIResponse = {
+  def getMediaURI(params: GetMediaURI): GetMediaURIResponse = {
     val resp = new GetMediaURIResponse
     resp
   }
 
-  override def getLastUpdate: LastUpdate = {
+  def getLastUpdate: LastUpdate = {
     val update = new LastUpdate
     update
   }
 
-  override def getExtendedMetadata(params: GetExtendedMetadata): GetExtendedMetadataResponse = {
+  def getExtendedMetadata(params: GetExtendedMetadata): GetExtendedMetadataResponse = {
     val resp = new GetExtendedMetadataResponse
     resp
   }
 
-  override def getExtendedMetadataText(params: GetExtendedMetadataText): GetExtendedMetadataTextResponse = {
+  def getExtendedMetadataText(params: GetExtendedMetadataText): GetExtendedMetadataTextResponse = {
     val resp = new GetExtendedMetadataTextResponse
     resp
   }
@@ -85,12 +75,10 @@ class SonatronServiceServer extends SonatronService {
   def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse = {
     val resp = new GetDeviceLinkCodeResponse
     val link = new DeviceLinkCodeResult
-    val soundCloud = new SoundCloud("e10f65a53ebbf3a7156182d2987a8ec2", "3768ee10efdaf0170ab1f03217cf6210")
-
-    link.setRegUrl(soundCloud.authorizationUrl.toString)
-    link.setLinkCode("NA")
-    link.setShowLinkCode(false)
-
+    val code = Await.result(provider.getDeviceLinkCode(householdId), 5.seconds)
+    link.setRegUrl(code.url)
+    link.setLinkCode(code.linkCode)
+    link.setShowLinkCode(code.showLinkCode)
     resp.setGetDeviceLinkCodeResult(link)
     resp
   }
