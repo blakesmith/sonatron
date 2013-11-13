@@ -7,9 +7,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import me.blakesmith.soundcloud.{Client => SoundCloud}
 
-class SonatronWebService extends ScalatraServlet with FutureSupport {
-  val soundCloud = new SoundCloud("e10f65a53ebbf3a7156182d2987a8ec2", "3768ee10efdaf0170ab1f03217cf6210")
-
+class SonatronWebService(soundCloud: SoundCloud) extends ScalatraServlet with FutureSupport {
   protected implicit def executor: ExecutionContext = global
 
   get("/connect") {
@@ -21,9 +19,9 @@ class SonatronWebService extends ScalatraServlet with FutureSupport {
         }
       case None => future("No code provided, please try logging in again")
     }
-    f recoverWith {
+    val recover = f recoverWith {
       case _ => future("Something went wrong, please try again")
     }
-    new AsyncResult { val is = f }
+    new AsyncResult { val is = recover }
   }
 }
