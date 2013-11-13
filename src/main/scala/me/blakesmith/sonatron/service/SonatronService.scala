@@ -17,7 +17,7 @@ import com.sonos.smapi.soap.LastUpdate
 import com.sonos.smapi.soap.{Search, SearchResponse}
 
 import me.blakesmith.sonatron.exception.Fault
-
+import me.blakesmith.soundcloud.{Client => SoundCloud}
 
 trait SonatronService {
   def getSessionId(sid: GetSessionId): GetSessionIdResponse
@@ -85,7 +85,9 @@ class SonatronServiceServer extends SonatronService {
   def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse = {
     val resp = new GetDeviceLinkCodeResponse
     val link = new DeviceLinkCodeResult
-    link.setRegUrl("http://blakesmith.me")
+    val soundCloud = new SoundCloud("e10f65a53ebbf3a7156182d2987a8ec2", "3768ee10efdaf0170ab1f03217cf6210")
+
+    link.setRegUrl(soundCloud.authorizationUrl.toString)
     link.setLinkCode("NA")
     link.setShowLinkCode(false)
 
