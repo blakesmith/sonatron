@@ -13,4 +13,7 @@ class Client(token: String, secret: String) {
 
   def authorizationUrl: Future[URI] =
     future { wrapper.authorizationCodeUrl(Endpoints.CONNECT, Token.SCOPE_NON_EXPIRING) }
+
+  def authorizationToken(code: String): Future[Token] =
+    future { wrapper.authorizationCode(code) }
 }
