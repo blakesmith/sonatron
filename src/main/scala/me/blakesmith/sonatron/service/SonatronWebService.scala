@@ -5,9 +5,11 @@ import org.scalatra._
 import scala.concurrent.{Future, ExecutionContext, future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
-import me.blakesmith.soundcloud.{Client => SoundCloud}
+import me.blakesmith.sonatron.Config
 
-class SonatronWebService(soundCloud: SoundCloud) extends ScalatraServlet with FutureSupport {
+class SonatronWebService extends ScalatraServlet with FutureSupport {
+  val soundCloud = Config.soundCloud
+
   protected implicit def executor: ExecutionContext = global
 
   get("/connect") {
