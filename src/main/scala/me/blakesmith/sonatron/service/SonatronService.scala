@@ -1,7 +1,10 @@
 package me.blakesmith.sonatron.service
 
 import javax.jws.{WebParam, WebMethod, WebResult, WebService}
+import javax.xml.namespace.QName
 import javax.xml.ws.{RequestWrapper, ResponseWrapper}
+import javax.xml.soap.SOAPFactory
+import javax.xml.ws.soap.SOAPFaultException
 import javax.jws.soap.SOAPBinding
 import javax.jws.soap.SOAPBinding.Style
 
@@ -100,6 +103,9 @@ class SonatronServiceServer extends SonatronService {
     val authToken = new DeviceAuthTokenResult
     authToken.setAuthToken("token123")
     authToken.setPrivateKey("privateKey")
+
+    val factory = SOAPFactory.newInstance
+    throw new SOAPFaultException(factory.createFault("Not authenticated yet", new QName("NOT_LINKED_RETRY")))
     authToken
   }
 }
