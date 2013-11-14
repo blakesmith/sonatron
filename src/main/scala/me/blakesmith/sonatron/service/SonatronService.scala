@@ -5,7 +5,9 @@ import javax.jws.{WebParam, WebMethod, WebResult, WebService}
 import javax.xml.ws.{RequestWrapper, ResponseWrapper, WebServiceContext}
 import javax.jws.soap.SOAPBinding
 import javax.jws.soap.SOAPBinding.Style
+import javax.xml.ws.handler.soap.SOAPMessageContext
 
+import com.sonos.smapi.CredentialsHelper
 import com.sonos.smapi.soap.{GetDeviceLinkCodeResponse, DeviceLinkCodeResult}
 import com.sonos.smapi.soap.{GetDeviceAuthTokenResponse, DeviceAuthTokenResult}
 import com.sonos.smapi.soap.{GetExtendedMetadata, GetExtendedMetadataResponse}
@@ -43,6 +45,7 @@ class SonatronServiceServer(provider: Provider) {
   @WebResult(name = "getMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMetadata")
   def getMetadata(@WebParam(partName = "parameters", name = "getMetadata", targetNamespace = "http://www.sonos.com/Services/1.1") params: GetMetadata): GetMetadataResponse = {
+    val token = CredentialsHelper.getCredentialsFromHeaders(context)
     val resp = new GetMetadataResponse
     resp
   }
@@ -65,7 +68,12 @@ class SonatronServiceServer(provider: Provider) {
     resp
   }
 
+  @WebResult(name = "getLastUpdateResult", targetNamespace = "http://www.sonos.com/Services/1.1")
+  @RequestWrapper(localName = "getLastUpdate", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdate")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getLastUpdate")
+  @ResponseWrapper(localName = "getLastUpdateResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdateResponse")
   def getLastUpdate: LastUpdate = {
+    val token = CredentialsHelper.getCredentialsFromHeaders(context)
     val update = new LastUpdate
     update
   }
