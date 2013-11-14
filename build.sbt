@@ -8,6 +8,8 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 
 resolvers += "Local Maven" at Path.userHome.asFile.toURI.toURL + ".m2/repository"
 
+unmanagedJars in Compile += file("lib/java-api-wrapper-1.3.2-SNAPSHOT.jar")
+
 libraryDependencies ++= Seq(
   "org.apache.cxf" % "cxf-rt-frontend-jaxws" % "2.7.7",
   "org.apache.cxf" % "cxf-rt-transports-http" % "2.7.7",
