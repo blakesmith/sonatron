@@ -1,7 +1,8 @@
 package me.blakesmith.sonatron.service
 
+import javax.annotation.Resource;
 import javax.jws.{WebParam, WebMethod, WebResult, WebService}
-import javax.xml.ws.{RequestWrapper, ResponseWrapper}
+import javax.xml.ws.{RequestWrapper, ResponseWrapper, WebServiceContext}
 import javax.jws.soap.SOAPBinding
 import javax.jws.soap.SOAPBinding.Style
 
@@ -29,18 +30,27 @@ import me.blakesmith.soundcloud.SoundCloudProvider
 
 @WebService(targetNamespace = "http://www.sonos.com/Services/1.1", name = "SonosSoap")
 class SonatronServiceServer(provider: Provider) {
+  @Resource
+  private var context: WebServiceContext = _
+
   def getSessionId(sid: GetSessionId): GetSessionIdResponse = {
     val resp = new GetSessionIdResponse
     resp.setGetSessionIdResult("1234");
     resp
   }
 
+  @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+  @WebResult(name = "getMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getMetadata")
   def getMetadata(params: GetMetadata): GetMetadataResponse = {
     val resp = new GetMetadataResponse
     resp
   }
 
-  def search(search: Search): SearchResponse = {
+  @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+  @WebResult(name = "searchResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#search")
+  def search(@WebParam(partName = "parameters", name = "search", targetNamespace = "http://www.sonos.com/Services/1.1") search: Search): SearchResponse = {
     val resp = new SearchResponse
     resp
   }
