@@ -6,8 +6,10 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import me.blakesmith.sonatron.Config
-import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken}
+import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken, Metadata}
 import me.blakesmith.sonatron.provider.Provider
+
+import com.soundcloud.api.Token
 
 
 class SoundCloudProvider(token: String, secret: String) extends Provider {
@@ -25,5 +27,11 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
     linkDao.getAuthToken(linkCode) map {
       case Some(token) => Some(DeviceAuthToken(linkCode, token.access))
       case None => None
+    }
+
+  def getMetadataResponse(id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
+    linkDao.getAuthToken(id) map {
+      case Some(token) => new Metadata
+      case None => throw new RuntimeException("Could not find user access token: %s".format(id))
     }
 }

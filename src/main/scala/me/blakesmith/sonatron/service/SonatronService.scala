@@ -45,7 +45,12 @@ class SonatronServiceServer(provider: Provider) {
   @WebResult(name = "getMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMetadata")
   def getMetadata(@WebParam(partName = "parameters", name = "getMetadata", targetNamespace = "http://www.sonos.com/Services/1.1") params: GetMetadata): GetMetadataResponse = {
-    val token = CredentialsHelper.getCredentialsFromHeaders(context)
+    val metadata = Await.result(provider.getMetadataResponse(
+      userToken,
+      params.getIndex,
+      params.getCount,
+      false
+    ), 5.seconds)
     val resp = new GetMetadataResponse
     resp
   }
@@ -73,7 +78,6 @@ class SonatronServiceServer(provider: Provider) {
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getLastUpdate")
   @ResponseWrapper(localName = "getLastUpdateResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdateResponse")
   def getLastUpdate: LastUpdate = {
-    val token = CredentialsHelper.getCredentialsFromHeaders(context)
     val update = new LastUpdate
     update
   }
@@ -116,5 +120,7 @@ class SonatronServiceServer(provider: Provider) {
     authToken.setPrivateKey(token.privateKey)
     authToken
   }
+
+  private def userToken: String = CredentialsHelper.getCredentialsFromHeaders(context)
 }
 
