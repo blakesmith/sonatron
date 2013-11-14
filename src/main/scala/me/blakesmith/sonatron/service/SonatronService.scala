@@ -16,9 +16,12 @@ import com.sonos.smapi.soap.{GetSessionId, GetSessionIdResponse}
 import com.sonos.smapi.soap.LastUpdate
 import com.sonos.smapi.soap.{Search, SearchResponse}
 
+import scala.concurrent.{Future, ExecutionContext, future}
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Await
 import scala.concurrent.duration._
 
+import me.blakesmith.sonatron.Config
 import me.blakesmith.sonatron.exception.Fault
 import me.blakesmith.sonatron.provider.Provider
 import me.blakesmith.soundcloud.SoundCloudProvider
@@ -89,10 +92,10 @@ class SonatronServiceServer(provider: Provider) {
   @ResponseWrapper(localName = "getDeviceAuthTokenResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceAuthTokenResponse")
   def getDeviceAuthToken(@WebParam(name = "householdId", targetNamespace = "http://www.sonos.com/Services/1.1") householdId: String,
     @WebParam(name = "linkCode", targetNamespace = "http://www.sonos.com/Services/1.1") linkCode: String): DeviceAuthTokenResult = {
+    val token = Await.result(provider.getDeviceAuthToken(householdId, linkCode) map(_.getOrElse(Fault.sonosFault("Not authenticated yet", "NOT_LINKED_RETRY", 5))), 5.seconds)
     val authToken = new DeviceAuthTokenResult
-    authToken.setAuthToken("token123")
-    authToken.setPrivateKey("privateKey")
-    Fault.sonosFault("Not authenticated yet", "NOT_LINKED_RETRY", 5)
+    authToken.setAuthToken(token.token)
+    authToken.setPrivateKey(token.privateKey)
     authToken
   }
 }

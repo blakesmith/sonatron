@@ -11,8 +11,10 @@ import java.net.URI
 class Client(token: String, secret: String) {
   val wrapper = new ApiWrapper(token, secret, URI.create("http://localhost:8081/connect"), null)
 
-  def authorizationUrl: Future[URI] =
-    future { wrapper.authorizationCodeUrl(Endpoints.CONNECT, Token.SCOPE_NON_EXPIRING) }
+  def authorizationUrl(id: String): Future[URI] =
+    future {
+      wrapper.authorizationCodeUrl(Endpoints.CONNECT, Token.SCOPE_NON_EXPIRING, "display", id)
+    }
 
   def authorizationToken(code: String): Future[Token] =
     future { wrapper.authorizationCode(code) }
