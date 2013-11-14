@@ -42,7 +42,7 @@ class SonatronServiceServer(provider: Provider) {
   @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
   @WebResult(name = "getMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMetadata")
-  def getMetadata(params: GetMetadata): GetMetadataResponse = {
+  def getMetadata(@WebParam(partName = "parameters", name = "getMetadata", targetNamespace = "http://www.sonos.com/Services/1.1") params: GetMetadata): GetMetadataResponse = {
     val resp = new GetMetadataResponse
     resp
   }
