@@ -30,12 +30,10 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
     }
 
   def getMetadataResponse(id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
-    authorizedClient(id, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(id)))) flatMap { authed =>
-      authed.recentActivities map { activities =>
-        println(activities)
-        new Metadata
-      }
-    }
+    for {
+      authed <- authorizedClient(id, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(id))))
+      activities <- authed.recentActivities
+    } yield new Metadata
 
   private def authorizedClient(id: String, unauthorizedClient: Client): Future[Option[Client]] =
     linkDao.getAuthToken(id) map {
