@@ -8,6 +8,7 @@ import scala.concurrent.{Future, future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import org.apache.commons.io.IOUtils
+import org.apache.http.HttpResponse
 
 import java.io.StringWriter
 import java.net.URI
@@ -28,9 +29,13 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
     future {
       val req = Request.to("/me/activities/tracks/affiliated")
       val resp = wrapper.put(req)
-      val is = resp.getEntity.getContent
-      val writer = new StringWriter
-      IOUtils.copy(is, writer, "UTF-8")
-      Json.deserialize[TrackActivityResponse](writer.toString)
+      Json.deserialize[TrackActivityResponse](responseBody(resp))
     }
+
+  private def responseBody(resp: HttpResponse): String = {
+    val is = resp.getEntity.getContent
+    val writer = new StringWriter
+    IOUtils.copy(is, writer, "UTF-8")
+    writer.toString
+  }
 }
