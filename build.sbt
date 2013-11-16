@@ -10,6 +10,7 @@ resolvers += "Local Maven" at Path.userHome.asFile.toURI.toURL + ".m2/repository
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.1.3",
+  "commons-io" % "commons-io" % "2.4",
   "org.apache.cxf" % "cxf-rt-frontend-jaxws" % "2.7.7",
   "org.apache.cxf" % "cxf-rt-transports-http" % "2.7.7",
   "org.apache.cxf" % "cxf-rt-transports-http-jetty" % "2.7.7",
