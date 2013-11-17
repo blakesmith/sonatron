@@ -36,12 +36,6 @@ class SonatronServiceServer(provider: Provider) {
   @Resource
   private var context: WebServiceContext = _
 
-  def getSessionId(sid: GetSessionId): GetSessionIdResponse = {
-    val resp = new GetSessionIdResponse
-    resp.setGetSessionIdResult("1234");
-    resp
-  }
-
   @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
   @WebResult(name = "getMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMetadata")
@@ -69,35 +63,43 @@ class SonatronServiceServer(provider: Provider) {
   @WebResult(name = "searchResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#search")
   def search(@WebParam(partName = "parameters", name = "search", targetNamespace = "http://www.sonos.com/Services/1.1") search: Search): SearchResponse = {
+    println("search")
     val resp = new SearchResponse
     resp
   }
 
+  @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+  @WebResult(name = "getMediaMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getMediaMetadata")
   def getMediaMetadata(params: GetMediaMetadata): GetMediaMetadataResponse = {
+    println("getMediaMetadata")
     val resp = new GetMediaMetadataResponse
     resp
   }
 
-  def getMediaURI(params: GetMediaURI): GetMediaURIResponse = {
-    val resp = new GetMediaURIResponse
-    resp
+  @RequestWrapper(localName = "getMediaURI", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetMediaURI")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getMediaURI")
+  @ResponseWrapper(localName = "getMediaURIResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetMediaURIResponse")
+  def getMediaURI(@WebParam(name = "id", targetNamespace = "http://www.sonos.com/Services/1.1") id: String): GetMediaURI = {
+    println("media uri")
+    val uri = new GetMediaURI
+    uri
   }
 
-  @WebResult(name = "getLastUpdateResult", targetNamespace = "http://www.sonos.com/Services/1.1")
-  @RequestWrapper(localName = "getLastUpdate", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdate")
-  @WebMethod(action = "http://www.sonos.com/Services/1.1#getLastUpdate")
-  @ResponseWrapper(localName = "getLastUpdateResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdateResponse")
-  def getLastUpdate: LastUpdate = {
-    val update = new LastUpdate
-    update
-  }
-
+  @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+  @WebResult(name = "getExtendedMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getExtendedMetadata")
   def getExtendedMetadata(params: GetExtendedMetadata): GetExtendedMetadataResponse = {
+    println("Extended metadata")
     val resp = new GetExtendedMetadataResponse
     resp
   }
 
+  @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
+  @WebResult(name = "getExtendedMetadataTextResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getExtendedMetadataText")
   def getExtendedMetadataText(params: GetExtendedMetadataText): GetExtendedMetadataTextResponse = {
+    println("Extended metadata text")
     val resp = new GetExtendedMetadataTextResponse
     resp
   }
@@ -126,6 +128,18 @@ class SonatronServiceServer(provider: Provider) {
     authToken.setAuthToken(token.token)
     authToken.setPrivateKey(token.privateKey)
     authToken
+  }
+
+  @WebResult(name = "getLastUpdateResult", targetNamespace = "http://www.sonos.com/Services/1.1")
+  @RequestWrapper(localName = "getLastUpdate", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdate")
+  @WebMethod(action = "http://www.sonos.com/Services/1.1#getLastUpdate")
+  @ResponseWrapper(localName = "getLastUpdateResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdateResponse")
+  def getLastUpdate(): LastUpdate = {
+    val update = new LastUpdate
+    update.setCatalog("1c")
+    update.setFavorites("1f")
+    update.setPollInterval(600)
+    update
   }
 
   private def userToken: String = CredentialsHelper.getCredentialsFromHeaders(context)
