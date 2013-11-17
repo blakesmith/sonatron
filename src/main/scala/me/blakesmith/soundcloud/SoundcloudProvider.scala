@@ -33,7 +33,7 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
     for {
       authed <- authorizedClient(id, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(id))))
       activity <- authed.recentActivities
-    } yield Metadata.fromTracks(activity.collection)
+    } yield Metadata.fromTracks(activity.collection map(_.origin))
 
 
   private def authorizedClient(id: String, unauthorizedClient: Client): Future[Option[Client]] =

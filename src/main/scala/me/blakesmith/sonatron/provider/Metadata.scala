@@ -2,7 +2,7 @@ package me.blakesmith.sonatron.provider
 
 import java.util.UUID
 
-import com.sonos.smapi.soap.{MediaMetadata, StreamMetadata, TrackMetadata}
+import com.sonos.smapi.soap.{MediaMetadata, StreamMetadata, TrackMetadata, ItemType}
 import me.blakesmith.soundcloud.Track
 
 class Metadata(val members: Array[MediaMetadata])
@@ -12,7 +12,8 @@ object Metadata {
     new Metadata(
       tracks map { track =>
         val mm = new MediaMetadata
-        mm.setId(UUID.randomUUID.toString.slice(0, 31))
+        mm.setItemType(ItemType.TRACK)
+        mm.setId(track.id.toString)
         mm.setMimeType("audio/mpeg")
         mm.setTitle(track.title)
 

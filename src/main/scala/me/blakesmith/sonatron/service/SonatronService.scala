@@ -1,5 +1,7 @@
 package me.blakesmith.sonatron.service
 
+import java.util.UUID
+
 import javax.annotation.Resource;
 import javax.jws.{WebParam, WebMethod, WebResult, WebService}
 import javax.xml.ws.{RequestWrapper, ResponseWrapper, WebServiceContext}
@@ -136,9 +138,9 @@ class SonatronServiceServer(provider: Provider) {
   @ResponseWrapper(localName = "getLastUpdateResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetLastUpdateResponse")
   def getLastUpdate(): LastUpdate = {
     val update = new LastUpdate
-    update.setCatalog("1c")
-    update.setFavorites("1f")
-    update.setPollInterval(600)
+    update.setCatalog(UUID.randomUUID.toString.slice(0, 31))
+    update.setFavorites(UUID.randomUUID.toString.slice(0, 31))
+    update.setPollInterval(30)
     update
   }
 

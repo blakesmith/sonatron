@@ -24,7 +24,7 @@ class Track (
   @JsonProperty("tag_list") val tagList: String,
   @JsonProperty("label_id") val labelId: Int,
   @JsonProperty("label_name") val labelName: String,
-  @JsonProperty("release") val release: Int,
+  @JsonProperty("release") val release: String,
   @JsonProperty("release_day") val releaseDay: Int,
   @JsonProperty("release_month") val releaseMonth: Int,
   @JsonProperty("release_year") val releaseYear: Int,
