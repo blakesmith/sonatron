@@ -35,6 +35,7 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
       activity <- authed.recentActivities
     } yield Metadata.fromTracks(activity.collection)
 
+
   private def authorizedClient(id: String, unauthorizedClient: Client): Future[Option[Client]] =
     linkDao.getAuthToken(id) map {
       case Some(token) => Some(new Client(unauthorizedClient.token, unauthorizedClient.secret, token))

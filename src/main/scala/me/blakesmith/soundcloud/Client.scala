@@ -28,7 +28,7 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
   def recentActivities(): Future[TrackActivityResponse] =
     future {
       val req = Request.to("/me/activities/tracks/affiliated")
-      val resp = wrapper.put(req)
+      val resp = wrapper.get(req)
       checkError(resp)
       Json.deserialize[TrackActivityResponse](responseBody(resp))
     }
@@ -37,11 +37,13 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
     val is = resp.getEntity.getContent
     val writer = new StringWriter
     IOUtils.copy(is, writer, "UTF-8")
-    writer.toString
+    val body = writer.toString
+    body
   }
 
   private def checkError(resp: HttpResponse): Unit =
     resp.getStatusLine.getStatusCode match {
+      case 200 =>
       case 400 => throw new BadRequestException("Bad API request")
       case 401 => throw new UnauthorizedException("Bad credentials")
       case 403 => throw new ForbiddenException("You don't have permission to access that resource")
@@ -52,7 +54,7 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
       case 500 => throw new InternalServerErrorException("Internal server error")
       case 503 => throw new ServiceUnavailableException("Service is unavailable")
       case 504 => throw new GatewayTimeoutException("Gateway timeout")
-      case _ => throw new IllegalArgumentException("Unknown error")
+      case code => throw new IllegalArgumentException("Unknown error: %d".format(code))
     }
 }
 
