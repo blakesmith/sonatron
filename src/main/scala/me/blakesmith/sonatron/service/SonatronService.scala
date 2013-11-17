@@ -161,7 +161,7 @@ class SonatronServiceServer(provider: Provider) {
     val update = new LastUpdate
     update.setCatalog(UUID.randomUUID.toString.slice(0, 31))
     update.setFavorites(UUID.randomUUID.toString.slice(0, 31))
-    update.setPollInterval(30)
+    update.setPollInterval(600)
     update
   }
 

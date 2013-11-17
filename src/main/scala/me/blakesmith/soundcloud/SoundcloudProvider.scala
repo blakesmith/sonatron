@@ -31,26 +31,26 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
 
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
     for {
-      authed <- authorizedClient(userId, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(userId))))
+      authed <- authorizedClient(userId, client)
       activity <- authed.recentActivities
     } yield Metadata.fromTracks(activity.collection map(_.origin))
 
   def getMediaMetadata(userId: String, id: String): Future[Metadata] =
     for {
-      authed <- authorizedClient(userId, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(userId))))
+      authed <- authorizedClient(userId, client)
       track <- authed.getTrack(Integer.parseInt(id))
     } yield Metadata.fromTracks(List(track))
 
   def getMediaURI(userId: String, id: String): Future[MediaURI] =
     for {
-      authed <- authorizedClient(userId, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(userId))))
+      authed <- authorizedClient(userId, client)
       track <- authed.getTrack(Integer.parseInt(id))
       url <- authed.resolveStreamLocation(track.streamUrl)
     } yield MediaURI(url, Map())
 
-  private def authorizedClient(id: String, unauthorizedClient: Client): Future[Option[Client]] =
+  private def authorizedClient(id: String, unauthorizedClient: Client): Future[Client] =
     linkDao.getAuthToken(id) map {
-      case Some(token) => Some(new Client(unauthorizedClient.token, unauthorizedClient.secret, token))
-      case None => None
+      case Some(token) => new Client(unauthorizedClient.token, unauthorizedClient.secret, token)
+      case None => throw new RuntimeException("Could not find user access token: %s".format(id))
     }
 }
