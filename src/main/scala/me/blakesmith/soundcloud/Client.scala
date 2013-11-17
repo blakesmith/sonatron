@@ -33,6 +33,14 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
       Json.deserialize[TrackActivityResponse](responseBody(resp))
     }
 
+  def getTrack(id: Int): Future[Track] =
+    future {
+      val req = Request.to("/tracks/%d".format(id))
+      val resp = wrapper.get(req)
+      checkError(resp)
+      Json.deserialize[Track](responseBody(resp))
+    }
+
   private def responseBody(resp: HttpResponse): String = {
     val is = resp.getEntity.getContent
     val writer = new StringWriter

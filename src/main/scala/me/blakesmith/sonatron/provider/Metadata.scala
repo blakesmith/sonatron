@@ -1,7 +1,5 @@
 package me.blakesmith.sonatron.provider
 
-import java.util.UUID
-
 import com.sonos.smapi.soap.{MediaMetadata, StreamMetadata, TrackMetadata, ItemType}
 import me.blakesmith.soundcloud.Track
 
@@ -21,11 +19,11 @@ object Metadata {
         tm.setCanSkip(false) // This should probably be true, and support skipping
         tm.setCanPlay(true)
         tm.setCanAddToFavorites(false)
-        tm.setArtist("Test")//track.user.username)
-        tm.setAlbumArtist("Test")//track.user.username)
-        tm.setGenreId("Some genre id")
-        tm.setGenre("Some genre")
-        tm.setDuration(1234)
+        tm.setArtist(track.user.username)
+        tm.setAlbumArtist(track.user.username)
+        tm.setGenreId("NA")
+        tm.setGenre(track.genre)
+        tm.setDuration(track.duration)
         tm.setAlbumArtURI(track.artworkUrl)
 
         mm.setTrackMetadata(tm)

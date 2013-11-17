@@ -75,7 +75,14 @@ class SonatronServiceServer(provider: Provider) {
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMediaMetadata")
   def getMediaMetadata(params: GetMediaMetadata): GetMediaMetadataResponse = {
     println("getMediaMetadata")
+    val metadata = Await.result(provider.getMediaMetadata(
+      userToken,
+      params.getId
+    ), 5.seconds)
+
     val resp = new GetMediaMetadataResponse
+    val meta = metadata.members.headOption.getOrElse(throw new IllegalStateException("No metadata"))
+    resp.setGetMediaMetadataResult(meta)
     resp
   }
 
