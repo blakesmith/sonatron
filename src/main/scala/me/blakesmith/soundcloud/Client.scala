@@ -14,7 +14,7 @@ import java.io.StringWriter
 import java.net.URI
 
 
-class Client(val token: String, val secret: String, accessToken: Token=null) {
+class Client(val token: String, val secret: String, val accessToken: Token=null) {
   val wrapper = new ApiWrapper(token, secret, URI.create("http://localhost:8081/connect"), accessToken)
 
   def authorizationUrl(id: String): Future[URI] =
@@ -31,6 +31,18 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
       val resp = wrapper.get(req)
       checkError(resp)
       Json.deserialize[TrackActivityResponse](responseBody(resp))
+    }
+
+  def resolveStreamLocation(url: String): Future[String] =
+    future {
+      val req = Request.to(url)
+      val resp = wrapper.get(req)
+      checkError(resp)
+      val headers = resp.getHeaders("Location")
+      headers.length match {
+        case 1 => headers(0).getValue
+        case _ => throw new IllegalArgumentException("Could not find the location header for the stream")
+      }
     }
 
   def getTrack(id: Int): Future[Track] =
@@ -51,7 +63,7 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
 
   private def checkError(resp: HttpResponse): Unit =
     resp.getStatusLine.getStatusCode match {
-      case 200 =>
+      case 200 | 302 =>
       case 400 => throw new BadRequestException("Bad API request")
       case 401 => throw new UnauthorizedException("Bad credentials")
       case 403 => throw new ForbiddenException("You don't have permission to access that resource")

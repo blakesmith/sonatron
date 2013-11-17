@@ -4,7 +4,7 @@ import java.util.UUID
 
 import javax.annotation.Resource;
 import javax.jws.{WebParam, WebMethod, WebResult, WebService}
-import javax.xml.ws.{RequestWrapper, ResponseWrapper, WebServiceContext}
+import javax.xml.ws.{Holder, RequestWrapper, ResponseWrapper, WebServiceContext}
 import javax.jws.soap.SOAPBinding
 import javax.jws.soap.SOAPBinding.Style
 import javax.xml.ws.handler.soap.SOAPMessageContext
@@ -17,6 +17,7 @@ import com.sonos.smapi.soap.{GetExtendedMetadataText, GetExtendedMetadataTextRes
 import com.sonos.smapi.soap.{GetMediaMetadata, GetMediaMetadataResponse}
 import com.sonos.smapi.soap.MediaList
 import com.sonos.smapi.soap.{GetMediaURI, GetMediaURIResponse}
+import com.sonos.smapi.soap.{HttpHeader, HttpHeaders}
 import com.sonos.smapi.soap.{GetMetadata, GetMetadataResponse}
 import com.sonos.smapi.soap.{GetSessionId, GetSessionIdResponse}
 import com.sonos.smapi.soap.LastUpdate
@@ -74,7 +75,6 @@ class SonatronServiceServer(provider: Provider) {
   @WebResult(name = "getMediaMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMediaMetadata")
   def getMediaMetadata(params: GetMediaMetadata): GetMediaMetadataResponse = {
-    println("getMediaMetadata")
     val metadata = Await.result(provider.getMediaMetadata(
       userToken,
       params.getId
@@ -88,11 +88,24 @@ class SonatronServiceServer(provider: Provider) {
 
   @RequestWrapper(localName = "getMediaURI", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetMediaURI")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMediaURI")
-  @ResponseWrapper(localName = "getMediaURIResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetMediaURIResponse")
-  def getMediaURI(@WebParam(name = "id", targetNamespace = "http://www.sonos.com/Services/1.1") id: String): GetMediaURI = {
-    println("media uri")
-    val uri = new GetMediaURI
-    uri
+  def getMediaURI(
+    @WebParam(name = "id", targetNamespace = "http://www.sonos.com/Services/1.1")
+      id: String,
+    @WebParam(mode = WebParam.Mode.OUT, name = "getMediaURIResult", targetNamespace = "http://www.sonos.com/Services/1.1")
+      getMediaUriResult: Holder[String],
+    @WebParam(mode = WebParam.Mode.OUT, name = "httpHeaders", targetNamespace = "http://www.sonos.com/Services/1.1")
+      httpHeaders: Holder[HttpHeaders]): Unit = {
+    val media = Await.result(provider.getMediaURI(
+      userToken,
+      id
+    ), 5.seconds)
+    media.headers.foreach { case(k, v) =>
+      val header = new HttpHeader
+      header.setHeader(k)
+      header.setValue(v)
+      httpHeaders.value.getHttpHeader.add(header)
+    }
+    getMediaUriResult.value = media.url
   }
 
   @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)

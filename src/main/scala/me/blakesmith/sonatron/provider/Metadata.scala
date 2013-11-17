@@ -12,18 +12,18 @@ object Metadata {
         val mm = new MediaMetadata
         mm.setItemType(ItemType.TRACK)
         mm.setId(track.id.toString)
-        mm.setMimeType("audio/mpeg")
+        mm.setMimeType("audio/mp3")
         mm.setTitle(track.title)
 
         val tm = new TrackMetadata
-        tm.setCanSkip(false) // This should probably be true, and support skipping
+        tm.setCanSkip(true) // This should probably be true, and support skipping
         tm.setCanPlay(true)
         tm.setCanAddToFavorites(false)
         tm.setArtist(track.user.username)
         tm.setAlbumArtist(track.user.username)
         tm.setGenreId("NA")
         tm.setGenre(track.genre)
-        tm.setDuration(track.duration)
+        tm.setDuration(track.duration / 1000)
         tm.setAlbumArtURI(track.artworkUrl)
 
         mm.setTrackMetadata(tm)

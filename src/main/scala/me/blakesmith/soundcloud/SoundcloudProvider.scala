@@ -2,11 +2,11 @@ package me.blakesmith.soundcloud
 
 import java.util.UUID
 
-import scala.concurrent.Future
+import scala.concurrent.{Future, future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 import me.blakesmith.sonatron.Config
-import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken, Metadata}
+import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken, Metadata, MediaURI}
 import me.blakesmith.sonatron.provider.Provider
 
 import com.soundcloud.api.Token
@@ -40,6 +40,13 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
       authed <- authorizedClient(userId, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(userId))))
       track <- authed.getTrack(Integer.parseInt(id))
     } yield Metadata.fromTracks(List(track))
+
+  def getMediaURI(userId: String, id: String): Future[MediaURI] =
+    for {
+      authed <- authorizedClient(userId, client) map(_.getOrElse(throw new RuntimeException("Could not find user access token: %s".format(userId))))
+      track <- authed.getTrack(Integer.parseInt(id))
+      url <- authed.resolveStreamLocation(track.streamUrl)
+    } yield MediaURI(url, Map())
 
   private def authorizedClient(id: String, unauthorizedClient: Client): Future[Option[Client]] =
     linkDao.getAuthToken(id) map {

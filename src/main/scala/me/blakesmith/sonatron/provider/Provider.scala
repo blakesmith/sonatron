@@ -7,4 +7,5 @@ trait Provider {
   def getDeviceAuthToken(householdId: String, linkCode: String): Future[Option[DeviceAuthToken]]
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata]
   def getMediaMetadata(userId: String, id: String): Future[Metadata]
+  def getMediaURI(userId: String, id: String): Future[MediaURI]
 }
