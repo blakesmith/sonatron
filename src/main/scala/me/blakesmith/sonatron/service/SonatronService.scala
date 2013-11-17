@@ -13,6 +13,7 @@ import com.sonos.smapi.soap.{GetDeviceAuthTokenResponse, DeviceAuthTokenResult}
 import com.sonos.smapi.soap.{GetExtendedMetadata, GetExtendedMetadataResponse}
 import com.sonos.smapi.soap.{GetExtendedMetadataText, GetExtendedMetadataTextResponse}
 import com.sonos.smapi.soap.{GetMediaMetadata, GetMediaMetadataResponse}
+import com.sonos.smapi.soap.MediaList
 import com.sonos.smapi.soap.{GetMediaURI, GetMediaURIResponse}
 import com.sonos.smapi.soap.{GetMetadata, GetMetadataResponse}
 import com.sonos.smapi.soap.{GetSessionId, GetSessionIdResponse}
@@ -51,7 +52,16 @@ class SonatronServiceServer(provider: Provider) {
       params.getCount,
       false
     ), 5.seconds)
+    val mediaList = new MediaList
+    mediaList.setIndex(0)
+    mediaList.setCount(metadata.members.length)
+    mediaList.setTotal(metadata.members.length) // TODO: Should be more
+
+    metadata.members.foreach { meta =>
+      mediaList.getMediaCollectionOrMediaMetadata.add(meta)
+    }
     val resp = new GetMetadataResponse
+    resp.setGetMetadataResult(mediaList)
     resp
   }
 
