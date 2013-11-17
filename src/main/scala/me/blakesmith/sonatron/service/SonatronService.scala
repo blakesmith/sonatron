@@ -36,6 +36,7 @@ import me.blakesmith.soundcloud.SoundCloudProvider
 
 @WebService(targetNamespace = "http://www.sonos.com/Services/1.1", name = "SonosSoap")
 class SonatronServiceServer(provider: Provider) {
+  private val timeoutDuration = 10.seconds
   @Resource
   private var context: WebServiceContext = _
 
@@ -48,7 +49,7 @@ class SonatronServiceServer(provider: Provider) {
       params.getIndex,
       params.getCount,
       false
-    ), 5.seconds)
+    ), timeoutDuration)
     val mediaList = new MediaList
     mediaList.setIndex(0)
     mediaList.setCount(metadata.members.length)
@@ -78,7 +79,7 @@ class SonatronServiceServer(provider: Provider) {
     val metadata = Await.result(provider.getMediaMetadata(
       userToken,
       params.getId
-    ), 5.seconds)
+    ), timeoutDuration)
 
     val resp = new GetMediaMetadataResponse
     val meta = metadata.members.headOption.getOrElse(throw new IllegalStateException("No metadata"))
@@ -98,7 +99,7 @@ class SonatronServiceServer(provider: Provider) {
     val media = Await.result(provider.getMediaURI(
       userToken,
       id
-    ), 5.seconds)
+    ), timeoutDuration)
     media.headers.foreach { case(k, v) =>
       val header = new HttpHeader
       header.setHeader(k)
@@ -132,7 +133,7 @@ class SonatronServiceServer(provider: Provider) {
   @ResponseWrapper(localName = "getDeviceLinkCodeResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceLinkCodeResponse")
   def getDeviceLinkCode(@WebParam(name = "householdId", targetNamespace = "http://www.sonos.com/Services/1.1") householdId: String): DeviceLinkCodeResult = {
     val link = new DeviceLinkCodeResult
-    val code = Await.result(provider.getDeviceLinkCode(householdId), 5.seconds)
+    val code = Await.result(provider.getDeviceLinkCode(householdId), timeoutDuration)
     link.setRegUrl(code.url)
     link.setLinkCode(code.linkCode)
     link.setShowLinkCode(code.showLinkCode)
@@ -145,7 +146,7 @@ class SonatronServiceServer(provider: Provider) {
   @ResponseWrapper(localName = "getDeviceAuthTokenResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceAuthTokenResponse")
   def getDeviceAuthToken(@WebParam(name = "householdId", targetNamespace = "http://www.sonos.com/Services/1.1") householdId: String,
     @WebParam(name = "linkCode", targetNamespace = "http://www.sonos.com/Services/1.1") linkCode: String): DeviceAuthTokenResult = {
-    val token = Await.result(provider.getDeviceAuthToken(householdId, linkCode) map(_.getOrElse(Fault.sonosFault("Not authenticated yet", "NOT_LINKED_RETRY", 5))), 5.seconds)
+    val token = Await.result(provider.getDeviceAuthToken(householdId, linkCode) map(_.getOrElse(Fault.sonosFault("Not authenticated yet", "NOT_LINKED_RETRY", 5))), timeoutDuration)
     val authToken = new DeviceAuthTokenResult
     authToken.setAuthToken(token.token)
     authToken.setPrivateKey(token.privateKey)
