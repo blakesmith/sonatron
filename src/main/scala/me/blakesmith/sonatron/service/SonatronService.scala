@@ -66,9 +66,26 @@ class SonatronServiceServer(provider: Provider) {
   @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
   @WebResult(name = "searchResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#search")
-  def search(@WebParam(partName = "parameters", name = "search", targetNamespace = "http://www.sonos.com/Services/1.1") search: Search): SearchResponse = {
+  def search(@WebParam(partName = "parameters", name = "search", targetNamespace = "http://www.sonos.com/Services/1.1") params: Search): SearchResponse = {
     println("search")
+    val search = Await.result(provider.search(
+      userToken,
+      params.getId,
+      params.getTerm,
+      params.getIndex,
+      params.getCount
+    ), timeoutDuration)
+
+    val mediaList = new MediaList
+    mediaList.setIndex(0)
+    mediaList.setCount(search.members.length)
+    mediaList.setTotal(search.members.length) // TODO: Should be more
+
+    search.members.foreach { meta =>
+      mediaList.getMediaCollectionOrMediaMetadata.add(meta)
+    }
     val resp = new SearchResponse
+    resp.setSearchResult(mediaList)
     resp
   }
 

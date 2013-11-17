@@ -48,6 +48,12 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
       url <- authed.resolveStreamLocation(track.streamUrl)
     } yield MediaURI(url, Map())
 
+  def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
+    for {
+      authed <- authorizedClient(userId, client)
+      tracks <- authed.search(term)
+    } yield Metadata.fromTracks(tracks)
+
   private def authorizedClient(id: String, unauthorizedClient: Client): Future[Client] =
     linkDao.getAuthToken(id) map {
       case Some(token) => new Client(unauthorizedClient.token, unauthorizedClient.secret, token)
