@@ -33,6 +33,18 @@ class Client(val token: String, val secret: String, val accessToken: Token=null)
       Json.deserialize[TrackActivityResponse](responseBody(resp))
     }
 
+  def resolve(url: String): Future[String] =
+    future {
+      val req = Request.to("/resolve").`with`("url", url)
+      val resp = wrapper.get(req)
+      checkError(resp)
+      val headers = resp.getHeaders("Location")
+      headers.length match {
+        case 1 => headers(0).getValue
+        case _ => throw new IllegalArgumentException("Could not find the location header")
+      }
+    }
+
   def resolveStreamLocation(url: String): Future[String] =
     future {
       val req = Request.to(url)

@@ -4,6 +4,7 @@ import java.util.UUID
 
 import scala.concurrent.{Future, future}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.matching
 
 import me.blakesmith.sonatron.Config
 import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken, Metadata, MediaURI}
@@ -49,14 +50,35 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
     } yield MediaURI(url, Map())
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
+    term.startsWith("http") match {
+      case true => resolveSearch(userId, term)
+      case false => normalSearch(userId, searchId, term, index, count)
+    }
+
+  private def normalSearch(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
     for {
       authed <- authorizedClient(userId, client)
       tracks <- authed.search(term)
     } yield Metadata.fromTracks(tracks)
+
+  private def resolveSearch(userId: String, url: String): Future[Metadata] =
+    for {
+      authed <- authorizedClient(userId, client)
+      url <- authed.resolve(url)
+      track <- authed.getTrack(extractTrackIdFromUrl(url))
+    } yield Metadata.fromTracks(List(track))
 
   private def authorizedClient(id: String, unauthorizedClient: Client): Future[Client] =
     linkDao.getAuthToken(id) map {
       case Some(token) => new Client(unauthorizedClient.token, unauthorizedClient.secret, token)
       case None => throw new RuntimeException("Could not find user access token: %s".format(id))
     }
+
+  private def extractTrackIdFromUrl(url: String): Int = {
+    val reg = """/tracks/([0-9]+)""".r
+    reg.findFirstMatchIn(url) map(_.group(1)) match {
+      case Some(id) => Integer.parseInt(id)
+      case None => throw new IllegalArgumentException("Unable to determine track number from url search term")
+    }
+  }
 }
