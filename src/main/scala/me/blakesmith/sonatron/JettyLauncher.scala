@@ -6,7 +6,7 @@ import org.eclipse.jetty.webapp.WebAppContext
 
 import org.scalatra.servlet.ScalatraListener
 
-class JettyLauncher(dir: String="src/main/webapp", port: Int=8081) extends Runnable {
+class JettyLauncher(dir: String="src/main/webapp", port: Int=9191) extends Runnable {
   val server = new Server(port)
 
   def runInBackground(): Thread = {
