@@ -8,6 +8,8 @@ resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/release
 
 resolvers += "Local Maven" at Path.userHome.asFile.toURI.toURL + ".m2/repository"
 
+seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
+
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.1.3",
   "commons-io" % "commons-io" % "2.4",
