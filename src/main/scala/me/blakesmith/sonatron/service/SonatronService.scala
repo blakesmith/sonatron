@@ -102,20 +102,17 @@ class SonatronServiceServer(provider: Provider) {
     resp
   }
 
-  @SOAPBinding(parameterStyle = SOAPBinding.ParameterStyle.BARE)
-  @WebResult(targetNamespace = "http://www.sonos.com/Services/1.1")
+  @WebResult(name = "getDeviceLinkCodeResult", targetNamespace = "http://www.sonos.com/Services/1.1")
   @RequestWrapper(localName = "getDeviceLinkCode", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceLinkCode")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getDeviceLinkCode")
   @ResponseWrapper(localName = "getDeviceLinkCodeResponse", targetNamespace = "http://www.sonos.com/Services/1.1", className = "com.sonos.smapi.soap.GetDeviceLinkCodeResponse")
-  def getDeviceLinkCode(householdId: String): GetDeviceLinkCodeResponse = {
-    val resp = new GetDeviceLinkCodeResponse
+  def getDeviceLinkCode(@WebParam(name = "householdId", targetNamespace = "http://www.sonos.com/Services/1.1") householdId: String): DeviceLinkCodeResult = {
     val link = new DeviceLinkCodeResult
     val code = Await.result(provider.getDeviceLinkCode(householdId), 5.seconds)
     link.setRegUrl(code.url)
     link.setLinkCode(code.linkCode)
     link.setShowLinkCode(code.showLinkCode)
-    resp.setGetDeviceLinkCodeResult(link)
-    resp
+    link
   }
 
   @WebResult(name = "getDeviceAuthTokenResult", targetNamespace = "http://www.sonos.com/Services/1.1")

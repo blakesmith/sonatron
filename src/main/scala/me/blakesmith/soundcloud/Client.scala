@@ -29,6 +29,7 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
     future {
       val req = Request.to("/me/activities/tracks/affiliated")
       val resp = wrapper.put(req)
+      checkError(resp)
       Json.deserialize[TrackActivityResponse](responseBody(resp))
     }
 
@@ -38,4 +39,31 @@ class Client(val token: String, val secret: String, accessToken: Token=null) {
     IOUtils.copy(is, writer, "UTF-8")
     writer.toString
   }
+
+  private def checkError(resp: HttpResponse): Unit =
+    resp.getStatusLine.getStatusCode match {
+      case 400 => throw new BadRequestException("Bad API request")
+      case 401 => throw new UnauthorizedException("Bad credentials")
+      case 403 => throw new ForbiddenException("You don't have permission to access that resource")
+      case 404 => throw new NotFoundException("Not found")
+      case 406 => throw new NotAccessibleException("That resource is not accessible at the moment")
+      case 422 => throw new UnprocessableEntityException("A paremeter in your request is in the incorrect format")
+      case 429 => throw new RatelimitException("You've exceeded your maximum number of requests")
+      case 500 => throw new InternalServerErrorException("Internal server error")
+      case 503 => throw new ServiceUnavailableException("Service is unavailable")
+      case 504 => throw new GatewayTimeoutException("Gateway timeout")
+      case _ => throw new IllegalArgumentException("Unknown error")
+    }
 }
+
+class SoundcloudException extends Exception
+class BadRequestException(message: String) extends SoundcloudException
+class UnauthorizedException(message: String) extends SoundcloudException
+class ForbiddenException(message: String) extends SoundcloudException
+class NotFoundException(message: String) extends SoundcloudException
+class NotAccessibleException(message: String) extends SoundcloudException
+class UnprocessableEntityException(message: String) extends SoundcloudException
+class RatelimitException(message: String) extends SoundcloudException
+class InternalServerErrorException(message: String) extends SoundcloudException
+class ServiceUnavailableException(message: String) extends SoundcloudException
+class GatewayTimeoutException(message: String) extends SoundcloudException
