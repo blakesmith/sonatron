@@ -15,7 +15,7 @@ import java.net.URI
 
 
 class Client(val token: String, val secret: String, val accessToken: Token=null) {
-  val wrapper = new ApiWrapper(token, secret, URI.create("http://localhost:8081/connect"), accessToken)
+  val wrapper = new ApiWrapper(token, secret, URI.create("https://sonatron.blakesmith.me/connect"), accessToken)
 
   def authorizationUrl(id: String): Future[URI] =
     future {
