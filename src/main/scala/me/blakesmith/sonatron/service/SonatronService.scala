@@ -123,6 +123,7 @@ class SonatronServiceServer(provider: Provider) {
       userToken,
       id
     ), timeoutDuration)
+    httpHeaders.value = new HttpHeaders
     media.headers.foreach { case(k, v) =>
       val header = new HttpHeader
       header.setHeader(k)
@@ -137,7 +138,6 @@ class SonatronServiceServer(provider: Provider) {
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getExtendedMetadata")
   def getExtendedMetadata(params: GetExtendedMetadata): GetExtendedMetadataResponse = {
     log.info("getExtendedMetadata request")
-    println("Extended metadata")
     val resp = new GetExtendedMetadataResponse
     resp
   }
