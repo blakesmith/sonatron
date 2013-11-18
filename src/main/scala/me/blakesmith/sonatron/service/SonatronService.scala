@@ -36,7 +36,7 @@ import me.blakesmith.soundcloud.SoundCloudProvider
 
 @WebService(targetNamespace = "http://www.sonos.com/Services/1.1", name = "SonosSoap")
 class SonatronServiceServer(provider: Provider) {
-  private val timeoutDuration = 10.seconds
+  private val timeoutDuration = 60.seconds
   @Resource
   private var context: WebServiceContext = _
 
