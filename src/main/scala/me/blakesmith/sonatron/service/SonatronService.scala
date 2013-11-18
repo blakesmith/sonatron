@@ -53,7 +53,7 @@ class SonatronServiceServer(provider: Provider) {
       params.getCount,
       false
     ), timeoutDuration)
-    log.info("getMetadata request: %s, %s, %s".format(params.getIndex, params.getCount))
+    log.info("getMetadata request: %s, %d, %d".format(params.getIndex, params.getIndex, params.getCount))
     val mediaList = new MediaList
     mediaList.setIndex(0)
     mediaList.setCount(metadata.members.length)
@@ -71,7 +71,7 @@ class SonatronServiceServer(provider: Provider) {
   @WebResult(name = "searchResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#search")
   def search(@WebParam(partName = "parameters", name = "search", targetNamespace = "http://www.sonos.com/Services/1.1") params: Search): SearchResponse = {
-    log.info("search request: %s, %s, %s, %s, %s".format(userToken, params.getId, params.getTerm, params.getIndex, params.getCount))
+    log.info("search request: %s, %s, %s, %d, %d".format(userToken, params.getId, params.getTerm, params.getIndex, params.getCount))
     val search = Await.result(provider.search(
       userToken,
       params.getId,
