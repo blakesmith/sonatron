@@ -1,6 +1,6 @@
 Architecture: i386
 Package: sonatron
-Version: 0.0.9
+Version: 0.0.10
 Maintainer: blakesmith0@gmail.com
 Description: Sonatron for Sonos
 Section: Network
