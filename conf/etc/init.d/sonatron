@@ -21,11 +21,13 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Sonatron for Sonos"
 NAME=sonatron
-DAEMON="/usr/local/bin/sonatron"
+DAEMON="/usr/bin/sonatron"
 DAEMON_ARGS=
 EXTRA_ARGS="-c deploy --background --make-pidfile"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
+
+export java_opts="-Xmx256m -Xms256m"
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0

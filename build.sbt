@@ -1,14 +1,29 @@
+import com.typesafe.sbt.SbtNativePackager._
+import com.typesafe.sbt.packager.linux.LinuxPackageMapping
+import com.typesafe.sbt.packager.Keys._
+
+packageArchetype.java_application
+
 name := "sonatron"
 
 version := "0.1"
 
 scalaVersion := "2.10.3"
 
+packageSummary in Linux := "Sonatron for Sonos"
+
+maintainer in Debian := "blakesmith0@gmail.com"
+
+packageDescription := "Sonatron for Sonos"
+
 resolvers += "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
 
 resolvers += "Local Maven" at Path.userHome.asFile.toURI.toURL + ".m2/repository"
 
-seq(com.github.retronym.SbtOneJar.oneJarSettings: _*)
+linuxPackageMappings in Debian <+= (baseDirectory) map { bd =>
+ (packageMapping((bd / "conf/etc/init.d/sonatron") -> "/etc/init.d/sonatron")
+   withUser "root" withGroup "root" withPerms "0755")
+}
 
 libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.1.3",
