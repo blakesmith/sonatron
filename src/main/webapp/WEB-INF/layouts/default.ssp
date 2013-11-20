@@ -1,0 +1,11 @@
+<%@ val body: String %>
+<%@ val title: String %>
+<html>
+  <head>
+    <link href="/css/sonatron.css" rel="stylesheet">
+    <title>Sonatron :: <%= title %></title>
+  </head>
+  <body>
+    <%= unescape(body) %>
+  </body>
+</html>

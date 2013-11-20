@@ -1,0 +1,17 @@
+.service-list {
+    list-style-type: none;
+}
+
+.service-list a {
+    font-size: 22px;
+    text-decoration: none;
+ }
+
+.service-list img {
+    vertical-align: middle;
+}
+
+.service-list span {
+   vertical-align: middle;
+   display: inline-block;
+}

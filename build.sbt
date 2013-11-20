@@ -41,5 +41,6 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "ejb3-persistence" % "3.3.2.Beta1",
   "org.eclipse.jetty" % "jetty-webapp" % "8.1.12.v20130726" % "compile",
   "org.iq80.leveldb" % "leveldb" % "0.6",
+  "org.scalatra" %% "scalatra-scalate" % "2.2.0",
   "org.scalatra" %% "scalatra" % "2.2.0"
 )

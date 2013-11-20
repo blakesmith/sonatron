@@ -1,0 +1,15 @@
+<%@ val title: String %>
+<h1><%= title %></h1>
+<p>
+Sonatron lets you add Sonos music services that aren't included by
+default with your Sonos device. Rigt now Sonatron adds support for:
+<ul class="service-list">
+  <li>
+    <span><img src="/img/soundcloud.png" /><a href="/instructions/soundcloud">Soundcloud</a></span>
+  </li>
+</ul>
+
+With more services to come soon.
+</p>
+<p>
+Sonatron is written by <a href="http://blakesmith.me">Blake Smith</a>
