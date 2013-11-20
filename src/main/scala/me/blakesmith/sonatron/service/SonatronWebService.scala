@@ -16,7 +16,7 @@ class SonatronWebService extends ScalatraServlet with FutureSupport with Scalate
 
   get("/") {
     contentType="text/html"
-    ssp("/index", "title" -> "Sonos music services")
+    ssp("index", "title" -> "Sonos music services")
   }
 
   get("/connect") {

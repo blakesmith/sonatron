@@ -6,7 +6,7 @@ import org.eclipse.jetty.webapp.WebAppContext
 
 import org.scalatra.servlet.ScalatraListener
 
-class JettyLauncher(dir: String="src/main/resources", port: Int=9191) extends Runnable {
+class JettyLauncher(dir: String="static", port: Int=9191) extends Runnable {
   val server = new Server(port)
 
   def runInBackground(): Thread = {
@@ -18,7 +18,10 @@ class JettyLauncher(dir: String="src/main/resources", port: Int=9191) extends Ru
   def run(): Unit = {
     val context = new WebAppContext()
     context setContextPath "/"
-    context.setResourceBase(dir)
+    val resourceDir = this.getClass.getClassLoader.getResource(dir)
+    println(resourceDir)
+    if (resourceDir == null) throw new IllegalArgumentException("No resource directory")
+    context.setResourceBase(resourceDir.toExternalForm)
     context.addEventListener(new ScalatraListener)
     context.addServlet(classOf[DefaultServlet], "/")
     server.setHandler(context)
