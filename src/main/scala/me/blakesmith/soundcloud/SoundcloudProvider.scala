@@ -46,8 +46,9 @@ class SoundCloudProvider(token: String, secret: String) extends Provider {
     for {
       authed <- authorizedClient(userId, client)
       track <- authed.getTrack(Integer.parseInt(id))
-//      url <- authed.resolveStreamLocation(track.streamUrl)
-    } yield MediaURI(track.streamUrl, Map("Authorization"->"OAuth %s".format(authed.accessToken.access)))
+      url <- authed.resolveStreamLocation(track.streamUrl)
+//    } yield MediaURI(track.streamUrl, Map("Authorization"->"OAuth %s".format(authed.accessToken.access)))
+    } yield MediaURI(url, Map())
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
     term.startsWith("http") match {
