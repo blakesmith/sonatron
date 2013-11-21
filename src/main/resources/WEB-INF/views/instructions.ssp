@@ -1,0 +1,86 @@
+<%@ val title: String %>
+<h1><%= title %></h1>
+<p>
+Play Soundcloud audio tracks on
+your <a href="http://www.sonos.com">Sonos Device</a>.
+</p>
+<h2>Features</h2>
+<ul>
+  <li>Play songs directly from your Soundcloud activity stream</li>
+  <li>Full Soundcloud search support</li>
+  <li>Copy and paste a soundcloud url to get fast and exact lookup</li>
+</ul>
+<h2>Setup instructions</h2>
+<ol>
+  <li>
+    <p>
+      In the Sonos Controller on your Computer, go to the Top menu and
+      select "About My Sonos". You need to get the IP address for the
+      Sonos.
+    </p>
+    <img src="/img/soundcloud_instructions_1.png" />
+  </li>
+  <li>
+    <p>
+      Open your web browser and enter the Sonos IP address URL:
+      http://IP_ADDRESS:1400/customsd.htm
+    </p>
+    <img src="/img/soundcloud_instructions_2.png" />
+  </li>
+  <li>
+    <p>
+      Fill out the form with the folling values:
+    </p>
+    <ul>
+      <li>SID: 255</li>
+      <li>Service Name: Soundcloud</li>
+      <li>Endpoint URL: http://sonatron.blakesmith.me/soundcloud</li>
+      <li>Secure Endpoint URL:
+      https://sonatron.blakesmith.me/soundcloud</li>
+      <li>Polling interval: 600</li>
+      <li>Authentication SOAP header policy: Device Link</li>
+      <li>Strings Table Version: 4, Uri:
+      http://sonatron.blakesmith.me/soundcloud.xml</li>
+      <li>Container Type: Music Service</li>
+      <li>Capabilities: Search</li>
+    </ul>
+    <img src="/img/soundcloud_instructions_3.png" />
+  </li>
+  <li>
+    <p>
+      Inside the Sonos Controller application on your computer, click on
+      "More Music"
+    </p>
+    <img src="/img/soundcloud_instructions_4.png" />
+  </li>
+  <li>
+    <p>
+      Click "Soundcloud"
+    </p>
+    <img src="/img/soundcloud_instructions_5.png" />
+  </li>
+  <li>
+    <p>
+      Check "I already have an account"
+    </p>
+    <img src="/img/soundcloud_instructions_6.png" />
+  </li>
+  <li>
+    <p>
+      Click the link inside the window and authenticate with
+      Soundcloud
+    </p>
+    <img src="/img/soundcloud_instructions_7.png" />
+    <img src="/img/soundcloud_instructions_8.png" />
+  </li>
+  <li>
+    <p>
+      Once you have authenticated with Soundcloud, switch back to your
+      Sonos device, and you should see Soundcloud in the music menu.
+    </p>
+    <img src="/img/soundcloud_instructions_9.png" />
+  </li>
+  <li>
+    Enjoy!
+  </li>
+</ol>

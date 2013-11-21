@@ -19,6 +19,11 @@ class SonatronWebService extends ScalatraServlet with FutureSupport with Scalate
     ssp("index", "title" -> "Sonos music services")
   }
 
+  get("/instructions/soundcloud") {
+    contentType="text/html"
+    ssp("instructions", "title" -> "Soundcloud Instructions")
+  }
+
   get("/connect") {
     val f = (for {
       linkCode <- params.get("state")
