@@ -41,12 +41,12 @@ Version=2
     assert(pls.numEntries === 8)
     assert(pls.numEntries === pls.entries.length)
     assert(pls.version === 2)
-    assert(pls.entries(0).file.file == "http://pub4.di.fm:80/di_latinhouse")
-    assert(pls.entries(0).title.map(_.title).getOrElse("No title") == "Digitally Imported - Latin House")
-    assert(pls.entries(0).length.map(_.length).getOrElse(0) == -1)
-    assert(pls.entries(7).file.file == "http://pub2.di.fm:80/di_latinhouse")
-    assert(pls.entries(7).title.map(_.title).getOrElse("No title") == "Digitally Imported - Latin House")
-    assert(pls.entries(7).length.map(_.length).getOrElse(0) == -1)
+    assert(pls.entries(0).file == "http://pub4.di.fm:80/di_latinhouse")
+    assert(pls.entries(0).title.getOrElse("No title") == "Digitally Imported - Latin House")
+    assert(pls.entries(0).length.getOrElse(0) == -1)
+    assert(pls.entries(7).file == "http://pub2.di.fm:80/di_latinhouse")
+    assert(pls.entries(7).title.getOrElse("No title") == "Digitally Imported - Latin House")
+    assert(pls.entries(7).length.getOrElse(0) == -1)
 
   }
 }

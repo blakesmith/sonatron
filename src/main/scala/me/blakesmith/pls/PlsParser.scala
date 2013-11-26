@@ -9,7 +9,7 @@ case class PlsFile(val num: Int, val file: String) extends PlsLine
 case class PlsTitle(val num: Int, val title: String) extends PlsLine
 case class PlsLength(val num: Int, val length: Int) extends PlsLine
 
-case class PlsEntry(val num: Int, val file: PlsFile, val title: Option[PlsTitle], val length: Option[PlsLength])
+case class PlsEntry(val num: Int, val file: String, val title: Option[String], val length: Option[Int])
 
 case class Pls(val version: Int, val numEntries: Int, val entries: List[PlsEntry])
 
@@ -50,9 +50,9 @@ object PlsParser extends JavaTokenParsers {
       .map { case(num, lines) =>
         PlsEntry(
           num,
-          getFile(lines),
-          getTitle(lines),
-          getLength(lines)
+          getFile(lines).file,
+          getTitle(lines).map(_.title),
+          getLength(lines).map(_.length)
         )
     }
 
