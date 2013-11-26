@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
 import com.sonos.smapi.soap.Credentials;
+import com.sonos.smapi.soap.LoginToken;
 
 
 public class CredentialsHelper {
@@ -54,9 +55,13 @@ public class CredentialsHelper {
 				}
 				if (o instanceof Credentials) {
 					Credentials c = (Credentials) o;
-					String household = c.getLoginToken().getHouseholdId();
-					String token = c.getLoginToken().getToken();
-					String key = c.getLoginToken().getKey();
+					LoginToken loginToken = c.getLoginToken();
+					if (loginToken == null) {
+						return null;
+					}
+					String household = loginToken.getHouseholdId();
+					String token = loginToken.getToken();
+					String key = loginToken.getKey();
 
 					return token;
 				} else {

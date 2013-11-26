@@ -37,7 +37,7 @@ object Metadata {
 
   def fromChannels(chans: List[Channel]): Metadata = {
     new Metadata (
-      chans map { chan =>
+      chans.sortBy(_.name) map { chan =>
         val mm = new MediaMetadata
         mm.setItemType(ItemType.STREAM)
         mm.setId(chan.key)
