@@ -14,6 +14,11 @@ case class PlsEntry(val num: Int, val file: PlsFile, val title: Option[PlsTitle]
 case class Pls(val version: Int, val numEntries: Int, val entries: List[PlsEntry])
 
 object PlsParser extends JavaTokenParsers {
+  def apply(input: String): Either[String, Pls] = parseAll(pls, input) match {
+    case Success(result, _) => Right(result)
+    case NoSuccess(msg, _) => Left(msg)
+  }
+
   def pls: Parser[Pls] = (header ~> numEntries ~ (plsLine*) ~ version) ^^ {
     case numEnt ~ lines ~ vers => Pls(vers, numEnt, toEntries(lines))
   }
@@ -39,13 +44,16 @@ object PlsParser extends JavaTokenParsers {
     }
 
   private def toEntries(lines: List[PlsLine]): List[PlsEntry] =
-    lines.groupBy(_.num).toList.map { case(num, lines) =>
-      PlsEntry(
-        num,
-        getFile(lines),
-        getTitle(lines),
-        getLength(lines)
-      )
+    lines
+      .groupBy(_.num).toList
+      .sortBy { case (num, _) => num }
+      .map { case(num, lines) =>
+        PlsEntry(
+          num,
+          getFile(lines),
+          getTitle(lines),
+          getLength(lines)
+        )
     }
 
   private def getFile(lines: List[PlsLine]): PlsFile =
