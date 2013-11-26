@@ -2,10 +2,13 @@ package me.blakesmith.sonatron.provider
 
 import com.sonos.smapi.soap.{MediaMetadata, StreamMetadata, TrackMetadata, ItemType}
 import me.blakesmith.soundcloud.Track
+import me.blakesmith.digitallyimported.models.Channel
 
 class Metadata(val members: Array[MediaMetadata])
 
 object Metadata {
+  def empty = new Metadata(Array())
+
   def fromTracks(tracks: List[Track]): Metadata = {
     new Metadata(
       tracks map { track =>
@@ -27,6 +30,25 @@ object Metadata {
         tm.setAlbumArtURI(track.artworkUrl)
 
         mm.setTrackMetadata(tm)
+        mm
+      } toArray
+    )
+  }
+
+  def fromChannels(chans: List[Channel]): Metadata = {
+    new Metadata (
+      chans map { chan =>
+        val mm = new MediaMetadata
+        mm.setItemType(ItemType.STREAM)
+        mm.setId(chan.key)
+        mm.setMimeType("audio/mp3")
+        mm.setTitle(chan.name)
+
+        val sm = new StreamMetadata
+        sm.setBitrate(96)
+//        sm.setLogo
+
+        mm.setStreamMetadata(sm)
         mm
       } toArray
     )
