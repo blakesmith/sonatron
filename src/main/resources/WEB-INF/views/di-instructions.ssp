@@ -1,0 +1,78 @@
+<%@ val title: String %>
+<h1><%= title %></h1>
+<p>
+Play <a href="http://di.fm">Digitally Imported</a> radio stations on
+your <a href="http://www.sonos.com">Sonos Device</a>.
+</p>
+<h2>Features</h2>
+<ul>
+  <li>Stream all DI.fm channels straight to your Sonos</li>
+  <li>Only supports public, non premium streams (for now)</li>
+</ul>
+<h2>Setup instructions</h2>
+<ol>
+  <li>
+    <p>
+      In the Sonos Controller on your Computer, go to the Top menu and
+      select "About My Sonos". You need to get the IP address for the
+      Sonos.
+    </p>
+    <img src="/img/instructions/general_instructions_1.png" />
+  </li>
+  <li>
+    <p>
+      Open your web browser and enter the Sonos IP address URL:
+      http://IP_ADDRESS:1400/customsd.htm
+    </p>
+    <img src="/img/instructions/general_instructions_2.png" />
+  </li>
+  <li>
+    <p>
+      Fill out the form with the folling values:
+    </p>
+    <ul>
+      <li>SID: 240</li>
+      <li>Service Name: DigitallyImported</li>
+      <li>Endpoint URL: http://sonatron.blakesmith.me/di</li>
+      <li>Secure Endpoint URL:
+      https://sonatron.blakesmith.me/di</li>
+      <li>Polling interval: 600</li>
+      <li>Authentication SOAP header policy: Anonymous</li>
+      <li>Strings Table Version: 4, Uri:
+      http://sonatron.blakesmith.me/di.xml</li>
+      <li>Container Type: Music Service</li>
+      <li>Capabilities: None</li>
+    </ul>
+    <img src="/img/instructions/di_instructions_3.png" />
+  </li>
+  <li>
+    <p>
+      Inside the Sonos Controller application on your computer, click on
+      "More Music"
+    </p>
+    <img src="/img/instructions/general_instructions_4.png" />
+  </li>
+  <li>
+    <p>
+      Click "DigitallyImported"
+    </p>
+    <img src="/img/instructions/di_instructions_5.png" />
+  </li>
+  <li>
+    <p>
+      Press "Next"
+    </p>
+    <img src="/img/instructions/di_instructions_6.png" />
+    <img src="/img/instructions/di_instructions_7.png" />
+  </li>
+  <li>
+    <p>
+      Once you have added DigitallyImported, you should see a link to
+      it in the main music menu.
+    </p>
+    <img src="/img/instructions/di_instructions_8.png" />
+  </li>
+  <li>
+    Enjoy!
+  </li>
+</ol>

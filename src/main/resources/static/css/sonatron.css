@@ -2,6 +2,10 @@
     list-style-type: none;
 }
 
+.service-list li {
+    margin-bottom: 10px;
+}
+
 .service-list a {
     font-size: 22px;
     text-decoration: none;

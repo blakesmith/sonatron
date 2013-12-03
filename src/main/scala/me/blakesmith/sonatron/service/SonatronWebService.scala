@@ -21,7 +21,12 @@ class SonatronWebService extends ScalatraServlet with FutureSupport with Scalate
 
   get("/instructions/soundcloud") {
     contentType="text/html"
-    ssp("instructions", "title" -> "Soundcloud Instructions")
+    ssp("sc-instructions", "title" -> "Soundcloud Instructions")
+  }
+
+  get("/instructions/di") {
+    contentType="text/html"
+    ssp("di-instructions", "title" -> "DI Instructions")
   }
 
   get("/connect") {
