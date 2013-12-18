@@ -6,6 +6,8 @@ import scala.concurrent.{Future, future}
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.matching
 
+import me.blakesmith.sonatron.db.LinkCodeDAO
+
 import me.blakesmith.sonatron.Config
 import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken, Metadata, MediaURI}
 import me.blakesmith.sonatron.provider.Provider
@@ -13,9 +15,8 @@ import me.blakesmith.sonatron.provider.Provider
 import com.soundcloud.api.Token
 
 
-class SoundCloudProvider(token: String, secret: String) extends Provider {
-  val client = Config.soundCloud
-  val linkDao = Config.linkDao
+class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO) extends Provider {
+  val client = new Client(token, secret)
 
   def getDeviceLinkCode(householdId: String): Future[DeviceLinkCode] = {
     val linkCode = UUID.randomUUID.toString.slice(0, 31)

@@ -8,7 +8,9 @@ import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken, Metadat
 import me.blakesmith.sonatron.provider.Provider
 
 
-class YoutubeProvider(client: YoutubeClient) extends Provider {
+class YoutubeProvider(key: String) extends Provider {
+  val client = new YoutubeClient(key)
+
   def getDeviceLinkCode(householdId: String): Future[DeviceLinkCode] =
     future { DeviceLinkCode("", "", false) }
 
