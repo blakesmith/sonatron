@@ -16,4 +16,5 @@ object Config {
   private val levelDb = Iq80DBFactory.factory.open(new File(levelFile), levelOptions)
 
   val linkDao = new LinkCodeDAO(levelDb)
+  val youtubeKey = "AIzaSyCu5WTbXeIMCmgE4aWjN_XiUrkERzHDFog"
 }

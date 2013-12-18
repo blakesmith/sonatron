@@ -6,7 +6,7 @@ packageArchetype.java_application
 
 name := "sonatron"
 
-version := "0.2.3"
+version := "0.3.0"
 
 scalaVersion := "2.10.3"
 
@@ -35,6 +35,7 @@ libraryDependencies ++= Seq(
   "org.hamcrest" % "hamcrest-core" % "1.3.RC2",
   "org.apache.httpcomponents" % "httpmime" % "4.0.3",
   "org.apache.httpcomponents" % "httpclient" % "4.0.3",
+  "com.google.apis" % "google-api-services-youtube" % "v3-rev90-1.17.0-rc",
   "org.json" % "json" % "20090211",
   "org.slf4j" % "slf4j-simple" % "1.7.5",
 //  "com.soundcloud" % "java-api-wrapper" % "1.3.2-SNAPSHOT",
