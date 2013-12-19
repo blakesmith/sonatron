@@ -5,7 +5,7 @@ package me.blakesmith.sonatron.provider
 import com.sonos.smapi.soap.{MediaMetadata, StreamMetadata, TrackMetadata, ItemType}
 import me.blakesmith.soundcloud.Track
 import me.blakesmith.digitallyimported.models.Channel
-import com.google.api.services.youtube.model.SearchResult
+import com.google.api.services.youtube.model.{SearchResult, Video}
 
 class Metadata(val members: Array[MediaMetadata])
 
@@ -38,7 +38,7 @@ object Metadata {
     )
   }
 
-  def fromVideos(results: List[SearchResult]): Metadata = {
+  def fromSearchResult(results: List[SearchResult]): Metadata = {
     new Metadata(
       results map { result =>
         val mm = new MediaMetadata
@@ -63,6 +63,29 @@ object Metadata {
         mm
       } toArray
     )
+  }
+
+  def fromVideo(video: Video): Metadata = {
+    val mm = new MediaMetadata
+    mm.setItemType(ItemType.TRACK)
+    val snippet = video.getSnippet
+    mm.setId(video.getId)
+    mm.setMimeType("audio/mp3")
+    mm.setTitle(snippet.getTitle)
+
+    val tm = new TrackMetadata
+    tm.setCanSkip(true) // This should probably be true, and support skipping
+    tm.setCanPlay(true)
+    tm.setCanAddToFavorites(false)
+    tm.setArtist(snippet.getChannelTitle)
+    //        tm.setAlbumArtist(track.user.username)
+    //        tm.setGenreId("NA")
+    //        tm.setGenre(track.genre)
+    tm.setDuration(1000) // TODO: Parse
+    tm.setAlbumArtURI(snippet.getThumbnails.getDefault.getUrl)
+
+    mm.setTrackMetadata(tm)
+    new Metadata(Array(mm))
   }
 
   def fromChannels(chans: List[Channel]): Metadata = {

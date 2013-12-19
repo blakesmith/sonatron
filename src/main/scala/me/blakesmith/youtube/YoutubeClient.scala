@@ -21,7 +21,7 @@ class YoutubeClient(key: String) {
 
   def getVideo(id: String): Future[Video] =
     future {
-      val list = yt.videos.list("id,snippet,contentDetails,fileDetails")
+      val list = yt.videos.list("id,snippet,contentDetails")
       list.setKey(key)
       list.setId(id)
       list.execute.getItems.get(0)
