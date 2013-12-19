@@ -9,7 +9,7 @@ import com.google.api.client.http.{HttpRequest, HttpRequestInitializer}
 import com.google.api.client.http.javanet.NetHttpTransport
 import com.google.api.client.json.jackson2.JacksonFactory
 import com.google.api.services.youtube.YouTube
-import com.google.api.services.youtube.model.{ResourceId, SearchListResponse, SearchResult, Thumbnail}
+import com.google.api.services.youtube.model.{ResourceId, SearchListResponse, SearchResult, Thumbnail, Video}
 
 
 class YoutubeClient(key: String) {
@@ -19,8 +19,16 @@ class YoutubeClient(key: String) {
     def initialize(req: HttpRequest) {}
   }).build
 
-  def getVideo(id: String): Unit = ???
-  def getAudioStream(id: String): Unit = ???
+  def getVideo(id: String): Future[Video] =
+    future {
+      val list = yt.videos.list("id,snippet,contentDetails,fileDetails")
+      list.setKey(key)
+      list.setId(id)
+      list.execute.getItems.get(0)
+    }
+
+  def getAudioStream(id: String): Future[String] =
+    future { "http://www.youtube.com/get_video.php?video_id=%s".format(id) }
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[List[SearchResult]] =
     future {
@@ -32,5 +40,4 @@ class YoutubeClient(key: String) {
       val items: Buffer[SearchResult] = search.execute.getItems
       items.toList
     }
-
 }
