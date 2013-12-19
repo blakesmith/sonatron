@@ -36,6 +36,7 @@ libraryDependencies ++= Seq(
   "org.apache.httpcomponents" % "httpmime" % "4.0.3",
   "org.apache.httpcomponents" % "httpclient" % "4.0.3",
   "com.google.apis" % "google-api-services-youtube" % "v3-rev90-1.17.0-rc",
+  "com.google.http-client" % "google-http-client-jackson2" % "1.17.0-rc",
   "org.json" % "json" % "20090211",
   "org.slf4j" % "slf4j-simple" % "1.7.5",
 //  "com.soundcloud" % "java-api-wrapper" % "1.3.2-SNAPSHOT",

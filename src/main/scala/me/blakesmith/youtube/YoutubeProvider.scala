@@ -28,5 +28,8 @@ class YoutubeProvider(key: String) extends Provider {
 //    client.getStreamLocation(id) map { url => MediaURI(url, Map()) }
     future { MediaURI("test", Map()) }
 
-  def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] = future { Metadata.empty }
+  def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
+    client.search(userId, searchId, term, index, count) map { result =>
+      Metadata.fromVideos(result)
+    }
 }
