@@ -4,6 +4,7 @@ package me.blakesmith.sonatron.provider
 
 import com.sonos.smapi.soap.{MediaMetadata, StreamMetadata, TrackMetadata, ItemType}
 import me.blakesmith.soundcloud.Track
+import me.blakesmith.util.IsoDurationParser
 import me.blakesmith.digitallyimported.models.Channel
 import com.google.api.services.youtube.model.{SearchResult, Video}
 
@@ -45,7 +46,7 @@ object Metadata {
         mm.setItemType(ItemType.TRACK)
         val snippet = result.getSnippet
         mm.setId(result.getId.getVideoId)
-        mm.setMimeType("audio/mp3")
+        mm.setMimeType("audio/mpeg")
         mm.setTitle(snippet.getTitle)
 
         val tm = new TrackMetadata
@@ -53,13 +54,10 @@ object Metadata {
         tm.setCanPlay(true)
         tm.setCanAddToFavorites(false)
         tm.setArtist(snippet.getChannelTitle)
-//        tm.setAlbumArtist(track.user.username)
-//        tm.setGenreId("NA")
-//        tm.setGenre(track.genre)
         tm.setDuration(1000)
         tm.setAlbumArtURI(snippet.getThumbnails.getDefault.getUrl)
-
         mm.setTrackMetadata(tm)
+
         mm
       } toArray
     )
@@ -70,7 +68,7 @@ object Metadata {
     mm.setItemType(ItemType.TRACK)
     val snippet = video.getSnippet
     mm.setId(video.getId)
-    mm.setMimeType("audio/mp3")
+    mm.setMimeType("audio/mpeg")
     mm.setTitle(snippet.getTitle)
 
     val tm = new TrackMetadata
@@ -78,12 +76,30 @@ object Metadata {
     tm.setCanPlay(true)
     tm.setCanAddToFavorites(false)
     tm.setArtist(snippet.getChannelTitle)
-    //        tm.setAlbumArtist(track.user.username)
-    //        tm.setGenreId("NA")
-    //        tm.setGenre(track.genre)
-    tm.setDuration(1000) // TODO: Parse
+    IsoDurationParser(video.getContentDetails.getDuration) match {
+      case Left(msg) =>
+        println(msg)
+        tm.setDuration(2000)
+      case Right(seconds) => tm.setDuration(seconds)
+    }
     tm.setAlbumArtURI(snippet.getThumbnails.getDefault.getUrl)
+    mm.setTrackMetadata(tm)
 
+    new Metadata(Array(mm))
+  }
+
+  def placeHolder(): Metadata = {
+    val mm = new MediaMetadata
+    mm.setItemType(ItemType.TRACK)
+    mm.setId("1234")
+    mm.setTitle("Placeholder")
+
+    val tm = new TrackMetadata
+    tm.setCanSkip(false) // This should probably be true, and support skipping
+    tm.setCanPlay(false)
+    tm.setCanAddToFavorites(false)
+    tm.setArtist("Placeholder Artist")
+    tm.setDuration(1000)
     mm.setTrackMetadata(tm)
     new Metadata(Array(mm))
   }

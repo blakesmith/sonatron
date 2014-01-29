@@ -28,7 +28,8 @@ class YoutubeClient(key: String) {
     }
 
   def getAudioStream(id: String): Future[String] =
-    future { "http://sonatron.blakesmith.me/stream?id=%s".format(id) }
+    future { "http://192.168.1.141:8192/stream?id=%s".format(id) }
+//    future { "http://sonatron.blakesmith.me/stream?id=%s".format(id) }
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[List[SearchResult]] =
     future {
