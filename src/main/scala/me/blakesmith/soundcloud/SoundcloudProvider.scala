@@ -31,6 +31,8 @@ class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO) ex
       case None => None
     }
 
+  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.searchByKeyword }
+
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
     for {
       authed <- authorizedClient(userId, client)

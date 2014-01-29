@@ -47,21 +47,35 @@ class SonatronServiceServer(provider: Provider) {
   @WebResult(name = "getMetadataResponse", targetNamespace = "http://www.sonos.com/Services/1.1", partName = "parameters")
   @WebMethod(action = "http://www.sonos.com/Services/1.1#getMetadata")
   def getMetadata(@WebParam(partName = "parameters", name = "getMetadata", targetNamespace = "http://www.sonos.com/Services/1.1") params: GetMetadata): GetMetadataResponse = {
-    val metadata = Await.result(provider.getMetadataResponse(
-      userToken,
-      params.getIndex,
-      params.getCount,
-      false
-    ), timeoutDuration)
+    val metadata = Await.result(
+      params.getId match {
+        case "search" =>
+          provider.getSearchMenu(userToken,
+            params.getId,
+            params.getIndex,
+            params.getCount,
+            false)
+        case _ =>
+          provider.getMetadataResponse(userToken,
+            params.getIndex,
+            params.getCount,
+            false)
+      },
+      timeoutDuration)
     log.info("getMetadata request: %s, %d, %d".format(params.getIndex, params.getIndex, params.getCount))
     val mediaList = new MediaList
     mediaList.setIndex(0)
-    mediaList.setCount(metadata.members.length)
-    mediaList.setTotal(metadata.members.length) // TODO: Should be more
+    mediaList.setCount(metadata.metadata.length+metadata.mediaCollection.length)
+    mediaList.setTotal(metadata.metadata.length+metadata.mediaCollection.length) // TODO: Should be more
 
-    metadata.members.foreach { meta =>
+    metadata.metadata.foreach { meta =>
       mediaList.getMediaCollectionOrMediaMetadata.add(meta)
     }
+
+    metadata.mediaCollection.foreach { coll =>
+      mediaList.getMediaCollectionOrMediaMetadata.add(coll)
+    }
+
     val resp = new GetMetadataResponse
     resp.setGetMetadataResult(mediaList)
     resp
@@ -82,12 +96,17 @@ class SonatronServiceServer(provider: Provider) {
 
     val mediaList = new MediaList
     mediaList.setIndex(0)
-    mediaList.setCount(search.members.length)
-    mediaList.setTotal(search.members.length) // TODO: Should be more
+    mediaList.setCount(search.metadata.length+search.mediaCollection.length)
+    mediaList.setTotal(search.metadata.length+search.mediaCollection.length) // TODO: Should be more
 
-    search.members.foreach { meta =>
+    search.metadata.foreach { meta =>
       mediaList.getMediaCollectionOrMediaMetadata.add(meta)
     }
+
+    search.mediaCollection.foreach { coll =>
+      mediaList.getMediaCollectionOrMediaMetadata.add(coll)
+    }
+
     val resp = new SearchResponse
     resp.setSearchResult(mediaList)
     resp
@@ -104,7 +123,7 @@ class SonatronServiceServer(provider: Provider) {
     ), timeoutDuration)
 
     val resp = new GetMediaMetadataResponse
-    val meta = metadata.members.headOption.getOrElse(throw new IllegalStateException("No metadata"))
+    val meta = metadata.metadata.headOption.getOrElse(throw new IllegalStateException("No metadata"))
     resp.setGetMediaMetadataResult(meta)
     resp
   }

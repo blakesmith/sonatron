@@ -15,6 +15,8 @@ class DiProvider extends Provider {
 
   def getDeviceAuthToken(householdId: String, linkCode: String): Future[Option[DeviceAuthToken]] = future { Some(DeviceAuthToken("", "")) }
 
+  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.placeHolder }
+
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
     client.getChannels map { chans => Metadata.fromChannels(chans) }
 

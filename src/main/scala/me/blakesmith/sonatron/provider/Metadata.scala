@@ -2,13 +2,14 @@ package me.blakesmith.sonatron.provider
 
 // TODO: This class relationship should be inverted, it should not know about all these different provider types.
 
-import com.sonos.smapi.soap.{MediaMetadata, StreamMetadata, TrackMetadata, ItemType}
+import com.sonos.smapi.soap.{AbstractMedia, MediaMetadata, MediaCollection, StreamMetadata, TrackMetadata, ItemType}
 import me.blakesmith.soundcloud.Track
 import me.blakesmith.util.IsoDurationParser
 import me.blakesmith.digitallyimported.models.Channel
 import com.google.api.services.youtube.model.{SearchResult, Video}
 
-class Metadata(val members: Array[MediaMetadata])
+class Metadata(val metadata: Array[MediaMetadata],
+  val mediaCollection: Array[MediaCollection]=Array())
 
 object Metadata {
   def empty = new Metadata(Array())
@@ -102,6 +103,14 @@ object Metadata {
     tm.setDuration(1000)
     mm.setTrackMetadata(tm)
     new Metadata(Array(mm))
+  }
+
+  def searchByKeyword(): Metadata = {
+    val mc = new MediaCollection
+    mc.setItemType(ItemType.SEARCH)
+    mc.setId("keyword")
+    mc.setTitle("Keyword")
+    new Metadata(Array(), Array(mc))
   }
 
   def fromChannels(chans: List[Channel]): Metadata = {
