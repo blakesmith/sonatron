@@ -31,7 +31,7 @@ class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO) ex
       case None => None
     }
 
-  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.searchByKeyword }
+  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.searchByKeywordAndUrl }
 
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
     for {
@@ -50,13 +50,16 @@ class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO) ex
       authed <- authorizedClient(userId, client)
       track <- authed.getTrack(Integer.parseInt(id))
       url <- authed.resolveStreamLocation(track.streamUrl)
-//    } yield MediaURI(track.streamUrl, Map("Authorization"->"OAuth %s".format(authed.accessToken.access)))
     } yield MediaURI(url, Map())
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
-    term.startsWith("http") match {
-      case true => resolveSearch(userId, term)
-      case false => normalSearch(userId, searchId, term, index, count)
+    searchId match {
+      case "keyword" =>
+        term.startsWith("http") match {
+          case true => resolveSearch(userId, term)
+          case false => normalSearch(userId, searchId, term, index, count)
+        }
+      case "url" => resolveSearch(userId, term)
     }
 
   private def normalSearch(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =

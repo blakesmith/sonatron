@@ -2,6 +2,7 @@ package me.blakesmith.youtube
 
 import scala.concurrent.{Future, future}
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.util.matching
 
 import me.blakesmith.sonatron.provider.{DeviceLinkCode, DeviceAuthToken, Metadata, MediaURI}
 
@@ -16,7 +17,7 @@ class YoutubeProvider(key: String) extends Provider {
 
   def getDeviceAuthToken(householdId: String, linkCode: String): Future[Option[DeviceAuthToken]] = future { Some(DeviceAuthToken("", "")) }
 
-  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.searchByKeyword }
+  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.searchByKeywordAndUrl }
 
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
     future { Metadata.placeHolder }
@@ -28,7 +29,23 @@ class YoutubeProvider(key: String) extends Provider {
     client.getAudioStream(id) map { url => MediaURI(url, Map()) }
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
-    client.search(userId, searchId, term, index, Array(50, count).min) map { result =>
-      Metadata.fromSearchResult(result)
+    searchId match {
+      case "keyword" =>
+        term.startsWith("http") match {
+          case true => getMediaMetadata(userId, extractIdFromUrl(term))
+          case false =>
+            client.search(userId, searchId, term, index, Array(50, count).min) map { result =>
+              Metadata.fromSearchResult(result)
+            }
+        }
+      case "url" => getMediaMetadata(userId, extractIdFromUrl(term))
     }
+
+  private def extractIdFromUrl(url: String): String = {
+    val reg = """/watch\?v=(.+)""".r
+    reg.findFirstMatchIn(url) map (_.group(1)) match {
+      case Some(id) => id
+      case None => throw new IllegalArgumentException("Unable to extract youtube video id from the url search term")
+    }
+  }
 }

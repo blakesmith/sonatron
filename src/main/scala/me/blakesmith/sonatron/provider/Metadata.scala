@@ -91,26 +91,23 @@ object Metadata {
 
   def placeHolder(): Metadata = {
     val mm = new MediaMetadata
-    mm.setItemType(ItemType.TRACK)
-    mm.setId("1234")
-    mm.setTitle("Placeholder")
-
-    val tm = new TrackMetadata
-    tm.setCanSkip(false) // This should probably be true, and support skipping
-    tm.setCanPlay(false)
-    tm.setCanAddToFavorites(false)
-    tm.setArtist("Placeholder Artist")
-    tm.setDuration(1000)
-    mm.setTrackMetadata(tm)
+    mm.setItemType(ItemType.CONTAINER)
+    mm.setId("searchOnly")
+    mm.setTitle("Search Only")
     new Metadata(Array(mm))
   }
 
-  def searchByKeyword(): Metadata = {
-    val mc = new MediaCollection
-    mc.setItemType(ItemType.SEARCH)
-    mc.setId("keyword")
-    mc.setTitle("Keyword")
-    new Metadata(Array(), Array(mc))
+  def searchByKeywordAndUrl(): Metadata = {
+    val keyword = new MediaCollection
+    keyword.setItemType(ItemType.SEARCH)
+    keyword.setId("keyword")
+    keyword.setTitle("Keyword")
+
+    val url = new MediaCollection
+    url.setItemType(ItemType.SEARCH)
+    url.setId("url")
+    url.setTitle("URL")
+    new Metadata(Array(), Array(keyword, url))
   }
 
   def fromChannels(chans: List[Channel]): Metadata = {
