@@ -15,7 +15,7 @@ import me.blakesmith.sonatron.provider.Provider
 import com.soundcloud.api.Token
 
 
-class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO) extends Provider {
+class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO[Token]) extends Provider {
   val client = new Client(token, secret)
 
   def getDeviceLinkCode(householdId: String): Future[DeviceLinkCode] = {

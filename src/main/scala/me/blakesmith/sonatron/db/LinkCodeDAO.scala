@@ -8,28 +8,17 @@ import scala.concurrent.{Future, ExecutionContext, future}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 
-class LinkCodeDAO(db: LevelDB) {
-  def saveAuthToken(code: String, token: Token): Future[Unit] =
-    future { db.put(keyFor(code), tokenToBytes(token)) }
+class LinkCodeDAO[T](db: LevelDB, serializer: Serializer[T]) {
+  def saveAuthToken(code: String, token: T): Future[Unit] =
+    future { db.put(keyFor(code), serializer.toBytes(token)) }
 
-  def getAuthToken(code: String): Future[Option[Token]] =
+  def getAuthToken(code: String): Future[Option[T]] =
     future { 
       db.get(keyFor(code)) match {
         case null => None
-        case v => Some(bytesToToken(v))
+        case v => Some(serializer.fromBytes(v))
       }
     }
 
   private def keyFor(code: String): Array[Byte] = "linkCode:%s".format(code).getBytes
-
-  private def tokenToBytes(token: Token): Array[Byte] = "%s:%s:%s".format(token.access, token.refresh, token.scope).getBytes
-
-  private def bytesToToken(bytes: Array[Byte]): Token = {
-    val str = new String(bytes, "UTF-8")
-    str.split(':').toList match {
-      case access :: refresh :: scope :: Nil => new Token(access, refresh, scope)
-      case l => throw new RuntimeException("Failed to deserialize token: %s".format(l))
-    }
-  }
-    
 }

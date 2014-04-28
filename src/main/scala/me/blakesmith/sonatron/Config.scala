@@ -9,7 +9,7 @@ import me.blakesmith.soundcloud.{Client => SoundCloudClient}
 import me.blakesmith.sonatron.db.LinkCodeDAO
 
 import me.blakesmith.digitallyimported.DiProvider
-import me.blakesmith.soundcloud.SoundCloudProvider
+import me.blakesmith.soundcloud.{SoundCloudProvider, TokenSerializer}
 import me.blakesmith.youtube.YoutubeProvider
 
 
@@ -22,10 +22,10 @@ object Config {
   private val soundcloudSecret = "3768ee10efdaf0170ab1f03217cf6210"
   private val youtubeKey = "AIzaSyCu5WTbXeIMCmgE4aWjN_XiUrkERzHDFog"
 
-  val linkDao = new LinkCodeDAO(levelDb)
+  val soundCloudLinkDao = new LinkCodeDAO(levelDb, TokenSerializer)
   val soundCloud = new SoundCloudClient(soundcloudKey, soundcloudSecret)
 
-  val soundcloudProvider = new SoundCloudProvider(soundcloudKey, soundcloudSecret, linkDao)
+  val soundcloudProvider = new SoundCloudProvider(soundcloudKey, soundcloudSecret, soundCloudLinkDao)
   val diProvider = new DiProvider
   val youtubeProvider = new YoutubeProvider(youtubeKey)
 }

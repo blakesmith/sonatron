@@ -10,7 +10,7 @@ import me.blakesmith.sonatron.Config
 
 class SonatronWebService extends ScalatraServlet with FutureSupport with ScalateSupport {
   val soundCloud = Config.soundCloud
-  val linkDao = Config.linkDao
+  val soundCloudLinkDao = Config.soundCloudLinkDao
 
   protected implicit def executor: ExecutionContext = global
 
@@ -36,7 +36,7 @@ class SonatronWebService extends ScalatraServlet with FutureSupport with Scalate
     } yield (linkCode, code)) match {
       case Some((linkCode, code)) =>
         soundCloud.authorizationToken(code) flatMap { token =>
-          linkDao.saveAuthToken(linkCode, token) map { _ =>
+          soundCloudLinkDao.saveAuthToken(linkCode, token) map { _ =>
             "It worked! Open your Sonos controller to continue installation"
           }
         }
