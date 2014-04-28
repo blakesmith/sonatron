@@ -31,6 +31,7 @@ libraryDependencies ++= Seq(
   "org.apache.cxf" % "cxf-rt-frontend-jaxws" % "2.7.7",
   "org.apache.cxf" % "cxf-rt-transports-http" % "2.7.7",
   "org.apache.cxf" % "cxf-rt-transports-http-jetty" % "2.7.7",
+  "com.dropbox.core" % "dropbox-core-sdk" % "1.7.6",
   "org.hamcrest" % "hamcrest-library" % "1.3.RC2",
   "org.hamcrest" % "hamcrest-core" % "1.3.RC2",
   "org.apache.httpcomponents" % "httpmime" % "4.0.3",
