@@ -17,7 +17,7 @@ class YoutubeProvider(key: String) extends Provider {
 
   def getDeviceAuthToken(householdId: String, linkCode: String): Future[Option[DeviceAuthToken]] = future { Some(DeviceAuthToken("", "")) }
 
-  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.searchByKeywordAndUrl }
+  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.generalSearch }
 
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
     future { Metadata.placeHolder }
@@ -30,7 +30,7 @@ class YoutubeProvider(key: String) extends Provider {
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
     searchId match {
-      case "keyword" =>
+      case "keyword" | "artist" | "track" | "album" =>
         term.startsWith("http") match {
           case true => getMediaMetadata(userId, extractIdFromUrl(term))
           case false =>

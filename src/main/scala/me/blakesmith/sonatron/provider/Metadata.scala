@@ -97,7 +97,7 @@ object Metadata {
     new Metadata(Array(mm))
   }
 
-  def searchByKeywordAndUrl(): Metadata = {
+  def generalSearch: Metadata = {
     val keyword = new MediaCollection
     keyword.setItemType(ItemType.SEARCH)
     keyword.setId("keyword")
@@ -108,6 +108,23 @@ object Metadata {
     url.setId("url")
     url.setTitle("URL")
     new Metadata(Array(), Array(keyword, url))
+
+    val artist = new MediaCollection
+    artist.setItemType(ItemType.SEARCH)
+    artist.setId("artist")
+    artist.setTitle("Artist")
+
+    val track = new MediaCollection
+    track.setItemType(ItemType.SEARCH)
+    track.setId("track")
+    track.setTitle("Track")
+
+    val album = new MediaCollection
+    track.setItemType(ItemType.SEARCH)
+    track.setId("album")
+    track.setTitle("Album")
+
+    new Metadata(Array(), Array(keyword, url, artist, track, album))
   }
 
   def fromChannels(chans: List[Channel]): Metadata = {

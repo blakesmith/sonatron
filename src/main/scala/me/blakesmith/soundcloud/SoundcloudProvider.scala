@@ -31,7 +31,7 @@ class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO[Tok
       case None => None
     }
 
-  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.searchByKeywordAndUrl }
+  def getSearchMenu(userId: String, id: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] = future { Metadata.generalSearch }
 
   def getMetadataResponse(userId: String, index: Int, count: Int, recursive: Boolean): Future[Metadata] =
     for {
@@ -54,7 +54,7 @@ class SoundCloudProvider(token: String, secret: String, linkDao: LinkCodeDAO[Tok
 
   def search(userId: String, searchId: String, term: String, index: Int, count: Int): Future[Metadata] =
     searchId match {
-      case "keyword" =>
+      case "keyword" | "artist" | "track" | "album" =>
         term.startsWith("http") match {
           case true => resolveSearch(userId, term)
           case false => normalSearch(userId, searchId, term, index, count)
