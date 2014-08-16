@@ -6,6 +6,6 @@ Services supported:
 
 - Soundcloud
 - DigitallyImported
-- Youtube (Experimental, depends on [ytst](http://github.com/blakesmith/ytst)
+- Youtube (Experimental, depends on [ytst](http://github.com/blakesmith/ytst))
 
 This code runs a compatible Sonos SOAP service which handles mediating the SONOS device calls, as well as a simple jetty web server to handle authentication flows.
