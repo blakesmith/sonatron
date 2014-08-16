@@ -1,6 +1,6 @@
 # Sonatron
 
-This is the source that powers sonatron.blakesmith.me. This code allows me to run extra custom streaming services on my home [Sonos](http://sonos.com) device.
+This is the source that powers [Sonatron](http://sonatron.blakesmith.me). This code allows me to run extra custom streaming services on my home [Sonos](http://sonos.com) device.
 
 Services supported:
 
